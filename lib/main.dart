@@ -1,6 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:students_app/MainPage/searchScreen.dart';
+import 'package:flutter/material.dart';
+import 'package:students_app/MainPage/mainPage.dart';
+import 'package:students_app/MainPage/searchPage.dart';
 
 import 'WelcomePages/welPageOfFacultyOfScience.dart';
 import 'WelcomePages/welPageOfMathematics.dart';
@@ -12,7 +13,7 @@ import 'WelcomePages/welPageOfGeology.dart';
 
 import 'package:students_app/Auth/logInScreen.dart';
 import 'package:students_app/Auth/signUpScreen.dart';
-import 'package:students_app/MainPage/profileScreen.dart';
+import 'package:students_app/MainPage/profilePage.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,7 +32,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.white,
       ),
-      initialRoute: 'searchScreen',
+      initialRoute: 'facultyOfScience',
       routes: {
         'facultyOfScience': (context) => const FacultyOfScience(
               imageName: 'FacultyOfScience.png',
@@ -48,8 +49,8 @@ class MyApp extends StatelessWidget {
         'zoologyAndEntomology': (context) => const ZoologyAndEntomology(),
         'logInScreen': (context) => const LogIn(),
         'signUpScreen': (context) => const SignUp(),
-        'profileScreen': (context) => const ProfileScreen(),
-        'searchScreen': (context) => const SearchScrean()
+        'searchPage': (context) => const SearchPage(),
+        'mainPage': (context) => const MainPage()
       },
     );
   }

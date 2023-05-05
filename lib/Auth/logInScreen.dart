@@ -4,7 +4,6 @@ import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:students_app/Auth/buttonOfLogIn&SignUp.dart';
 
@@ -116,7 +115,7 @@ class _LogInState extends State<LogIn> {
                 ),
               ]),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Row(children: [
               const SizedBox(width: 15),
               const Text(
@@ -160,7 +159,7 @@ class _LogInState extends State<LogIn> {
                     width: 200,
                   );
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                  Navigator.of(context).pushReplacementNamed('profileScreen');
+                  Navigator.of(context).pushReplacementNamed('mainPage');
                 } on SocketException {
                   print("error connection");
                 } catch (e) {
@@ -191,9 +190,7 @@ class _LogInState extends State<LogIn> {
                 }
               },
             ),
-            SizedBox(
-              height: 10,
-            ),
+            const SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -215,9 +212,7 @@ class _LogInState extends State<LogIn> {
                 ),
               ],
             ),
-            SizedBox(
-              height: 50,
-            ),
+            const SizedBox(height: 50),
           ]),
         ]),
       ),
