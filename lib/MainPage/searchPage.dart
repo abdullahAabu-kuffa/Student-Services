@@ -32,7 +32,7 @@ class _SearchPageState extends State<SearchPage> {
                 showSelectedItems: true,
                 disabledItemFn: (String s) => s.startsWith('I'),
               ),
-              items: const ["63", "64", "65", '66'],
+              items: const ["2019", "2020", "2021", '2022'],
               dropdownDecoratorProps: const DropDownDecoratorProps(
                 dropdownSearchDecoration: InputDecoration(
                   labelText: "Choose Batch",
@@ -40,24 +40,6 @@ class _SearchPageState extends State<SearchPage> {
               ),
               onChanged: ((value) {}),
               selectedItem: selectedBatch,
-            ),
-          ),
-          const SizedBox(height: 20),
-          SizedBox(
-            width: 300,
-            child: DropdownSearch<String>(
-              popupProps: PopupProps.menu(
-                showSelectedItems: true,
-                disabledItemFn: (String s) => s.startsWith('I'),
-              ),
-              items: const ["1", "2", "3", '4'],
-              dropdownDecoratorProps: const DropDownDecoratorProps(
-                dropdownSearchDecoration: InputDecoration(
-                  labelText: "Choose Year",
-                ),
-              ),
-              onChanged: ((value) {}),
-              selectedItem: selectedYear,
             ),
           ),
           const SizedBox(height: 20),
@@ -96,7 +78,7 @@ class _SearchPageState extends State<SearchPage> {
                   Icons.search,
                   color: Colors.black54,
                 ),
-                fillColor: Colors.black38,
+                fillColor: Colors.white,
                 filled: true,
                 contentPadding:
                     EdgeInsets.symmetric(vertical: 10, horizontal: 20),

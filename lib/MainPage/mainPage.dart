@@ -85,12 +85,6 @@ class _MainPageState extends State<MainPage> {
         activeColorPrimary: mainColor,
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),
-      PersistentBottomNavBarItem(
-        icon: const Icon(CupertinoIcons.chat_bubble_2),
-        title: ("ChatGPT"),
-        activeColorPrimary: mainColor,
-        inactiveColorPrimary: CupertinoColors.systemGrey,
-      ),
     ];
   }
 }

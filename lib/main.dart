@@ -13,11 +13,10 @@ import 'WelcomePages/welPageOfGeology.dart';
 
 import 'package:students_app/Auth/logInScreen.dart';
 import 'package:students_app/Auth/signUpScreen.dart';
-import 'package:students_app/MainPage/profilePage.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  //WidgetsFlutterBinding.ensureInitialized();
+  // await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -32,7 +31,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.white,
       ),
-      initialRoute: 'facultyOfScience',
+      initialRoute: 'mainPage',
       routes: {
         'facultyOfScience': (context) => const FacultyOfScience(
               imageName: 'FacultyOfScience.png',
