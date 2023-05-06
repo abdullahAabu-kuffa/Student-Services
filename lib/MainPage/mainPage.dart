@@ -29,7 +29,13 @@ class _MainPageState extends State<MainPage> {
         ),
         elevation: 0,
         backgroundColor: mainColor,
+        actions: [
+          IconButton(
+              onPressed: () {},
+              icon: const Icon(CupertinoIcons.chat_bubble_2_fill))
+        ],
       ),
+      drawer: const Drawer(),
       body: PersistentTabView(
         context,
         controller: _controller,

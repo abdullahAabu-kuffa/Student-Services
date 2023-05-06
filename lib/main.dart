@@ -15,8 +15,8 @@ import 'package:students_app/Auth/logInScreen.dart';
 import 'package:students_app/Auth/signUpScreen.dart';
 
 void main() async {
-  //WidgetsFlutterBinding.ensureInitialized();
-  // await Firebase.initializeApp();
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -29,9 +29,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        scaffoldBackgroundColor: Colors.white,
+        scaffoldBackgroundColor: Colors.black,
       ),
-      initialRoute: 'mainPage',
+      initialRoute: 'logInScreen',
       routes: {
         'facultyOfScience': (context) => const FacultyOfScience(
               imageName: 'FacultyOfScience.png',

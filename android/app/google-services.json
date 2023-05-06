@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "540023598020",
+    "project_id": "studentsapp-a14ff",
+    "storage_bucket": "studentsapp-a14ff.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:540023598020:android:1bd2f4d31c582062d2d291",
+        "android_client_info": {
+          "package_name": "com.abukuffa.students_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "540023598020-u2qevish97b5mcfi1f56soif0qs9bk1a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAi18nuoXFfICdsGSkPNje3_3IB4SyDjgs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "540023598020-u2qevish97b5mcfi1f56soif0qs9bk1a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
