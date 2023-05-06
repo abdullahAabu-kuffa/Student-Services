@@ -159,7 +159,7 @@ class _LogInState extends State<LogIn> {
                     width: 200,
                   );
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                  Navigator.of(context).pushNamed('mainPage');
+                  Navigator.of(context).pushReplacementNamed('mainPage');
                 } on SocketException {
                   print("error connection");
                 } catch (e) {
