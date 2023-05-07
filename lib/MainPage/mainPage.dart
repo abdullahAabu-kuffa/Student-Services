@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
+import 'package:students_app/MainPage/chatGPT.dart';
 import 'package:students_app/MainPage/departementsPage.dart';
 import 'package:students_app/MainPage/homePage.dart';
 import 'package:students_app/MainPage/notesPage.dart';
@@ -31,7 +32,12 @@ class _MainPageState extends State<MainPage> {
         backgroundColor: mainColor,
         actions: [
           IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const chatGPT()),
+                );
+              },
               icon: const Icon(CupertinoIcons.chat_bubble_2_fill))
         ],
       ),
