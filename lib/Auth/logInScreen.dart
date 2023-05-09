@@ -6,6 +6,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:students_app/Auth/buttonOfLogIn&SignUp.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:students_app/MainPage/mainPage.dart';
 
 class LogIn extends StatefulWidget {
   const LogIn({super.key});
@@ -20,11 +22,17 @@ class _LogInState extends State<LogIn> {
   late String userName;
   late String profilePicture;
 
+  late String emailGoogle;
+  late String userNameGoogle;
+  late String profilePictureGoogle;
+
   bool loginLoading = false;
   bool _obscureAction = true;
 
   final _Auth = FirebaseAuth.instance;
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -159,7 +167,14 @@ class _LogInState extends State<LogIn> {
                     width: 200,
                   );
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                  Navigator.of(context).pushReplacementNamed('mainPage');
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => MainPage(
+                              name: 'null',
+                              email: email,
+                              photo:
+                                  'https://www.google.com/imgres?imgurl=https%3A%2F%2Fwww.shutterstock.com%2Fimage-vector%2Fdefault-avatar-profile-icon-grey-260nw-518740753.jpg&tbnid=x7HEvqKT8T9RoM&vet=12ahUKEwjQp7vplOj-AhVsvicCHVIqAO8QMygNegUIARCGAg..i&imgrefurl=https%3A%2F%2Fwww.shutterstock.com%2Fsearch%2Fdefault-avatar&docid=6L4rRZ5kjHPQ7M&w=260&h=280&q=default%20image%20icon&ved=2ahUKEwjQp7vplOj-AhVsvicCHVIqAO8QMygNegUIARCGAg')));
                 } on SocketException {
                   print("error connection");
                 } catch (e) {
@@ -204,7 +219,28 @@ class _LogInState extends State<LogIn> {
                 ),
                 const SizedBox(height: 10),
                 TextButton(
-                  onPressed: () async {},
+                  onPressed: () async {
+                    setState(() {
+                      loginLoading = true;
+                    });
+                    await _googleSignIn.signIn().then((value) {
+                      setState(() {
+                        emailGoogle = value!.email;
+                        userNameGoogle = value.displayName!;
+                        profilePictureGoogle = value.photoUrl!;
+                      });
+                    });
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => MainPage(
+                                name: userNameGoogle,
+                                email: emailGoogle,
+                                photo: profilePictureGoogle)));
+                    setState(() {
+                      loginLoading = false;
+                    });
+                  },
                   child: const Text(
                     'Google',
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),

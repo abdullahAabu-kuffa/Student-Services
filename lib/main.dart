@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:students_app/MainPage/homePage.dart';
 import 'package:students_app/MainPage/mainPage.dart';
 import 'package:students_app/MainPage/searchPage.dart';
 
@@ -32,6 +33,16 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.black,
       ),
       initialRoute: 'logInScreen',
+      onGenerateRoute: (settings) {
+        switch (settings.name) {
+          case 'homePage':
+            {
+              return MaterialPageRoute(builder: (context) {
+                return const HomePage();
+              });
+            }
+        }
+      },
       routes: {
         'facultyOfScience': (context) => const FacultyOfScience(
               imageName: 'FacultyOfScience.png',
@@ -49,7 +60,7 @@ class MyApp extends StatelessWidget {
         'logInScreen': (context) => const LogIn(),
         'signUpScreen': (context) => const SignUp(),
         'searchPage': (context) => const SearchPage(),
-        'mainPage': (context) => const MainPage()
+        'homePage': (context) => const HomePage(),
       },
     );
   }
