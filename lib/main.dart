@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:students_app/MainPage/homePage.dart';
 import 'package:students_app/MainPage/mainPage.dart';
 import 'package:students_app/MainPage/searchPage.dart';
+import 'package:students_app/database/table.dart';
 
 import 'WelcomePages/welPageOfFacultyOfScience.dart';
 import 'WelcomePages/welPageOfMathematics.dart';
@@ -61,6 +62,7 @@ class MyApp extends StatelessWidget {
         'signUpScreen': (context) => const SignUp(),
         'searchPage': (context) => const SearchPage(),
         'homePage': (context) => const HomePage(),
+        'tableScreen': (context) => const TableData(),
       },
     );
   }

@@ -230,6 +230,17 @@ class _LogInState extends State<LogIn> {
                         profilePictureGoogle = value.photoUrl!;
                       });
                     });
+                    var snackBar = const SnackBar(
+                      content: Text(
+                        textAlign: TextAlign.center,
+                        'Login successfully!',
+                        style: TextStyle(color: Colors.greenAccent),
+                      ),
+                      behavior: SnackBarBehavior.floating,
+                      backgroundColor: Colors.black54,
+                      width: 200,
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
                     Navigator.push(
                         context,
                         MaterialPageRoute(

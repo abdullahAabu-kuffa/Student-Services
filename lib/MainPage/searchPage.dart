@@ -134,10 +134,17 @@ class _SearchPageState extends State<SearchPage> {
                   // _userSheet= await UserSheetsApi.getWorkSheet(Spreadsheet,title:sheettitle);
                   // _getWorkSheet(sheettitle);
                   // print(sheetname);
+                  Navigator.of(context).pushNamed(
+                    'tableScreen',
+                    arguments: {
+                      'id': rowMap,
+                      'title': secRowMap,
+                    },
+                  );
+
                   setState(() {
                     isSearching = false;
                   });
-                 
                 },
                 title: 'Search',
               )

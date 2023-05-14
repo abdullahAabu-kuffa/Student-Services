@@ -117,7 +117,6 @@ class _MainPageState extends State<MainPage> {
             DepartementsPage(),
             SearchPage(),
             NotesPage(),
-            ProfilePage(),
           ],
           items: _navBarsItems(),
           navBarStyle: NavBarStyle.style9,
@@ -156,12 +155,6 @@ class _MainPageState extends State<MainPage> {
       PersistentBottomNavBarItem(
         icon: const Icon(CupertinoIcons.news),
         title: ("Notes"),
-        activeColorPrimary: mainColor,
-        inactiveColorPrimary: CupertinoColors.systemGrey,
-      ),
-      PersistentBottomNavBarItem(
-        icon: const Icon(CupertinoIcons.person),
-        title: ("Profile"),
         activeColorPrimary: mainColor,
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),

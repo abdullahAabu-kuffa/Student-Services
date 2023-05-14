@@ -1,21 +1,19 @@
 import 'package:flutter/material.dart';
 
-
-class tableData extends StatefulWidget {
-  const tableData({super.key});
+class TableData extends StatefulWidget {
+  const TableData({super.key});
 
   @override
-  State<tableData> createState() => _tableData();
+  State<TableData> createState() => _TableData();
 }
 
-
-class _tableData extends State<tableData> {
+class _TableData extends State<TableData> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text("hi"),
+          title: const Text("hi"),
         ),
         body: Center(
           child: ListView(
@@ -27,7 +25,7 @@ class _tableData extends State<tableData> {
               const SizedBox(
                 height: 15,
               ),
-              DataTable(columns: [
+              DataTable(columns: const [
                 DataColumn(
                     label: Text(
                   "Subjects",
@@ -52,7 +50,7 @@ class _tableData extends State<tableData> {
                       fontWeight: FontWeight.w400,
                       color: Colors.lightBlue),
                 ))
-              ], rows: [
+              ], rows: const [
                 DataRow(cells: [
                   DataCell(Text("Data Science")),
                   DataCell(Text("3.1")),

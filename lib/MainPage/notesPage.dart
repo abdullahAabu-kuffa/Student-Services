@@ -13,6 +13,7 @@ class _NotesPageState extends State<NotesPage> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
+      backgroundColor: Colors.white,
       body: Center(
         child: Text('NotesPage'),
       ),
