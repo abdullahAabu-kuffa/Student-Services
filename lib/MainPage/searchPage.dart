@@ -1,6 +1,8 @@
 // ignore_for_file: avoid_init_to_null, avoid_print, file_names, use_build_context_synchronously
 
+import 'package:googleapis/chat/v1.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:students_app/database/table.dart';
 import 'package:tuple/tuple.dart';
 import 'package:flutter/material.dart';
 import 'package:dropdown_search/dropdown_search.dart';
@@ -9,28 +11,47 @@ import 'package:students_app/database/user_sheets_api.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
-
-  // final User? user;
-
   @override
   State<SearchPage> createState() => _SearchPageState();
 }
 
 class _SearchPageState extends State<SearchPage> {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        initialRoute: '/',
+        routes: {
+          '/': (context) => const GradePage(),
+          '/table': (context) => const TableData(),
+        });
+  }
+}
+
+class GradePage extends StatefulWidget {
+  const GradePage({super.key});
+
+  @override
+  State<GradePage> createState() => _GradePageState();
+}
+
+class _GradePageState extends State<GradePage> {
   final formKey = GlobalKey<FormState>();
   TextEditingController idController = TextEditingController();
   var selectedYear = null,
       selectedSemester = null,
       term = null,
       sheettitle = null;
-  @override
   bool isSearching = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       body: ModalProgressHUD(
+        opacity: 0.0,
         inAsyncCall: isSearching,
+        dismissible: true,
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -38,7 +59,7 @@ class _SearchPageState extends State<SearchPage> {
               const SizedBox(height: 80),
               const Center(
                   child: Text(
-                'Search about your Degree.',
+                'Search about your grade.',
                 style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
               )),
               const SizedBox(height: 15),
@@ -49,7 +70,12 @@ class _SearchPageState extends State<SearchPage> {
                     showSelectedItems: true,
                     disabledItemFn: (String s) => s.startsWith('I'),
                   ),
-                  items: const ["2023/2022", "2022/2021"],
+                  items: const [
+                    "2023/2022",
+                    "2022/2021",
+                    "2021/2020",
+                    "2020/2019"
+                  ],
                   dropdownDecoratorProps: const DropDownDecoratorProps(
                     dropdownSearchDecoration: InputDecoration(
                       labelText: "Choose Batch",
@@ -78,7 +104,7 @@ class _SearchPageState extends State<SearchPage> {
                     ),
                   ),
                   onChanged: itemSelectionChangedSemester,
-                  selectedItem: selectedSemester,
+                  // selectedItem: selectedSemester,
                 ),
               ),
               const SizedBox(height: 25),
@@ -118,14 +144,24 @@ class _SearchPageState extends State<SearchPage> {
                     isSearching = true;
                   });
                   getSheetTitle(selectedSemester, selectedYear);
-                  await UserSheetsApi.init(sheettitle);
-                  //  String name = await sheet!.values.value(column:19, row: 8);
-                  //  print(name);
-                  //  print(idController.text.trim());
-                  // retrieveUserByKey();
-                  final tuple = await retrieveUserByKey();
-                  final rowMap = tuple.item1;
-                  final secRowMap = tuple.item2;
+                  try {
+                    final tuple = await retrieveUserByKey();
+                    Navigator.of(context).pushNamed(
+                      '/table',
+                      arguments: {
+                        'data': tuple,
+                        // 'id': rowMap,
+                        // 'title': secRowMap,
+                      },
+                    );
+                  } catch (e) {
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      content: Text('Not Found'),
+                      backgroundColor: Colors.red,
+                    ));
+                  }
+                  // final rowMap = tuple.item1;
+                  // final secRowMap = tuple.item2;
                   //لو هتطبع كله
                   //print(rowMap);
                   //print(secrowMap);
@@ -134,13 +170,6 @@ class _SearchPageState extends State<SearchPage> {
                   // _userSheet= await UserSheetsApi.getWorkSheet(Spreadsheet,title:sheettitle);
                   // _getWorkSheet(sheettitle);
                   // print(sheetname);
-                  Navigator.of(context).pushNamed(
-                    'tableScreen',
-                    arguments: {
-                      'id': rowMap,
-                      'title': secRowMap,
-                    },
-                  );
 
                   setState(() {
                     isSearching = false;
@@ -176,8 +205,8 @@ class _SearchPageState extends State<SearchPage> {
   }
 
   retrieveUserByKey() async {
+    await UserSheetsApi.init(sheettitle);
     String id = idController.text.trim();
-
     final ids = await sheet!.values.column(1);
     final rowIndex = ids.indexOf(id) + 1;
     // print(rowIndex);

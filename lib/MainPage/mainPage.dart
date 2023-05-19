@@ -9,8 +9,10 @@ import 'package:students_app/MainPage/chatGPT.dart';
 import 'package:students_app/MainPage/departementsPage.dart';
 import 'package:students_app/MainPage/homePage.dart';
 import 'package:students_app/MainPage/notesPage.dart';
-import 'package:students_app/MainPage/profilePage.dart';
+// import 'package:students_app/MainPage/profilePage.dart';
 import 'package:students_app/MainPage/searchPage.dart';
+
+Color mainColor = const Color.fromARGB(255, 1, 87, 155);
 
 class MainPage extends StatefulWidget {
   const MainPage(
@@ -25,9 +27,42 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  Color mainColor = const Color.fromARGB(255, 1, 87, 155);
   final PersistentTabController _controller =
       PersistentTabController(initialIndex: 0);
+  String _title = "Home";
+   final _screens = const [
+    HomePage(),
+    DepartementsPage(),
+    SearchPage(),
+    NotesPage(),
+  ];
+
+  final _navBarItems = [
+    PersistentBottomNavBarItem(
+      icon: const Icon(CupertinoIcons.home),
+      title: ("Home"),
+      activeColorPrimary: mainColor,
+      inactiveColorPrimary: CupertinoColors.systemGrey,
+    ),
+    PersistentBottomNavBarItem(
+      icon: const Icon(CupertinoIcons.text_badge_minus),
+      title: ("Departments"),
+      activeColorPrimary: mainColor,
+      inactiveColorPrimary: CupertinoColors.systemGrey,
+    ),
+    PersistentBottomNavBarItem(
+      icon: const Icon(CupertinoIcons.search),
+      title: ("Search"),
+      activeColorPrimary: mainColor,
+      inactiveColorPrimary: CupertinoColors.systemGrey,
+    ),
+    PersistentBottomNavBarItem(
+      icon: const Icon(CupertinoIcons.news),
+      title: ("Notes"),
+      activeColorPrimary: mainColor,
+      inactiveColorPrimary: CupertinoColors.systemGrey,
+    ),
+  ];
 
   final _auth = FirebaseAuth.instance;
   final messageTextController = TextEditingController();
@@ -40,12 +75,16 @@ class _MainPageState extends State<MainPage> {
       inAsyncCall: signOutLoading,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text(
-            "Services of Students",
-            style: TextStyle(fontWeight: FontWeight.bold),
+          centerTitle: true,
+          backgroundColor: mainColor,
+          title: Text(
+            _title,
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 25.0,
+            ),
           ),
           elevation: 0,
-          backgroundColor: mainColor,
           actions: [
             IconButton(
                 onPressed: () {
@@ -61,11 +100,12 @@ class _MainPageState extends State<MainPage> {
           child: Column(children: [
             UserAccountsDrawerHeader(
               currentAccountPicture: CircleAvatar(
-                child: Image.network(widget.photo),
+                child: Image.network(
+                  widget.photo,
+                ),
               ),
               accountName: Text(widget.name),
               accountEmail: Text(widget.email),
-              decoration: BoxDecoration(color: mainColor),
             ),
             TextButton(
               onPressed: () {},
@@ -112,13 +152,8 @@ class _MainPageState extends State<MainPage> {
         body: PersistentTabView(
           context,
           controller: _controller,
-          screens: const [
-            HomePage(),
-            DepartementsPage(),
-            SearchPage(),
-            NotesPage(),
-          ],
-          items: _navBarsItems(),
+          screens: _screens,
+          items: _navBarItems,
           navBarStyle: NavBarStyle.style9,
           // navBarStyle: NavBarStyle.style9,
           // navBarStyle: NavBarStyle.style7,
@@ -127,37 +162,42 @@ class _MainPageState extends State<MainPage> {
           // navBarStyle: NavBarStyle.style13,
           // navBarStyle: NavBarStyle.style3,
           // navBarStyle: NavBarStyle.style6,
+          onItemSelected: (index) {
+            setState(() {
+          _title = _navBarItems[index].title!;
+        });
+          },
         ),
       ),
     );
   }
 
-  List<PersistentBottomNavBarItem> _navBarsItems() {
-    return [
-      PersistentBottomNavBarItem(
-        icon: const Icon(CupertinoIcons.home),
-        title: ("Home"),
-        activeColorPrimary: mainColor,
-        inactiveColorPrimary: CupertinoColors.systemGrey,
-      ),
-      PersistentBottomNavBarItem(
-        icon: const Icon(CupertinoIcons.text_badge_minus),
-        title: ("departements"),
-        activeColorPrimary: mainColor,
-        inactiveColorPrimary: CupertinoColors.systemGrey,
-      ),
-      PersistentBottomNavBarItem(
-        icon: const Icon(CupertinoIcons.search),
-        title: ("Search"),
-        activeColorPrimary: mainColor,
-        inactiveColorPrimary: CupertinoColors.systemGrey,
-      ),
-      PersistentBottomNavBarItem(
-        icon: const Icon(CupertinoIcons.news),
-        title: ("Notes"),
-        activeColorPrimary: mainColor,
-        inactiveColorPrimary: CupertinoColors.systemGrey,
-      ),
-    ];
-  }
+  // List<PersistentBottomNavBarItem> _navBarsItems() {
+  //   return [
+  //     PersistentBottomNavBarItem(
+  //       icon: const Icon(CupertinoIcons.home),
+  //       title: ("Home"),
+  //       activeColorPrimary: mainColor,
+  //       inactiveColorPrimary: CupertinoColors.systemGrey,
+  //     ),
+  //     PersistentBottomNavBarItem(
+  //       icon: const Icon(CupertinoIcons.text_badge_minus),
+  //       title: ("departements"),
+  //       activeColorPrimary: mainColor,
+  //       inactiveColorPrimary: CupertinoColors.systemGrey,
+  //     ),
+  //     PersistentBottomNavBarItem(
+  //       icon: const Icon(CupertinoIcons.search),
+  //       title: ("Search"),
+  //       activeColorPrimary: mainColor,
+  //       inactiveColorPrimary: CupertinoColors.systemGrey,
+  //     ),
+  //     PersistentBottomNavBarItem(
+  //       icon: const Icon(CupertinoIcons.news),
+  //       title: ("Notes"),
+  //       activeColorPrimary: mainColor,
+  //       inactiveColorPrimary: CupertinoColors.systemGrey,
+  //     ),
+  //   ];
+  // }
 }
