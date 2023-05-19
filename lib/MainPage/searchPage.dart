@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_init_to_null, avoid_print, file_names, use_build_context_synchronously
 
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:students_app/database/table.dart';
 import 'package:tuple/tuple.dart';
 import 'package:flutter/material.dart';
 import 'package:dropdown_search/dropdown_search.dart';
@@ -52,7 +53,7 @@ class _SearchPageState extends State<SearchPage> {
                   items: const ["2023/2022", "2022/2021"],
                   dropdownDecoratorProps: const DropDownDecoratorProps(
                     dropdownSearchDecoration: InputDecoration(
-                      labelText: "Choose Batch",
+                      labelText: "Choose Year",
                     ),
                   ),
                   onChanged: itemSelectionChangedYear,
@@ -127,19 +128,20 @@ class _SearchPageState extends State<SearchPage> {
                   final rowMap = tuple.item1;
                   final secRowMap = tuple.item2;
                   //لو هتطبع كله
-                  //print(rowMap);
+                  //print(rowMap[2]);
                   //print(secrowMap);
                   //لو عايز عنصر عنصر هتعمل كده
                   //print(secRowMap[2]);
                   // _userSheet= await UserSheetsApi.getWorkSheet(Spreadsheet,title:sheettitle);
                   // _getWorkSheet(sheettitle);
                   // print(sheetname);
-                  Navigator.of(context).pushNamed(
-                    'tableScreen',
-                    arguments: {
-                      'id': rowMap,
-                      'title': secRowMap,
-                    },
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => TableData(
+                              rowMap: rowMap,
+                              secRowMap: secRowMap,
+                            )),
                   );
 
                   setState(() {

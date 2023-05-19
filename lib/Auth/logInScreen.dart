@@ -167,14 +167,14 @@ class _LogInState extends State<LogIn> {
                     width: 200,
                   );
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                  Navigator.push(
+                  Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
                           builder: (context) => MainPage(
-                              name: 'null',
+                              name: 'Abu-kuffa',
                               email: email,
                               photo:
-                                  'https://www.google.com/imgres?imgurl=https%3A%2F%2Fwww.shutterstock.com%2Fimage-vector%2Fdefault-avatar-profile-icon-grey-260nw-518740753.jpg&tbnid=x7HEvqKT8T9RoM&vet=12ahUKEwjQp7vplOj-AhVsvicCHVIqAO8QMygNegUIARCGAg..i&imgrefurl=https%3A%2F%2Fwww.shutterstock.com%2Fsearch%2Fdefault-avatar&docid=6L4rRZ5kjHPQ7M&w=260&h=280&q=default%20image%20icon&ved=2ahUKEwjQp7vplOj-AhVsvicCHVIqAO8QMygNegUIARCGAg')));
+                                  'https://drive.google.com/file/d/1AzYxONhI7fvDYjU5BUCwimnhbAVfwXbq/view?usp=sharing')));
                 } on SocketException {
                   print("error connection");
                 } catch (e) {
@@ -241,7 +241,7 @@ class _LogInState extends State<LogIn> {
                       width: 200,
                     );
                     ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    Navigator.push(
+                    Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                             builder: (context) => MainPage(

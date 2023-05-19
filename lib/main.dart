@@ -42,6 +42,12 @@ class MyApp extends StatelessWidget {
                 return const HomePage();
               });
             }
+          case 'tableScreen':
+            {
+              return MaterialPageRoute(builder: (context) {
+                return TableData();
+              });
+            }
         }
       },
       routes: {
