@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:students_app/Departments/square.dart';
 import 'package:students_app/MainPage/homePage.dart';
-import 'package:students_app/MainPage/mainPage.dart';
 import 'package:students_app/MainPage/searchPage.dart';
 import 'package:students_app/database/table.dart';
 
@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
           case 'tableScreen':
             {
               return MaterialPageRoute(builder: (context) {
-                return TableData();
+                return const TableData();
               });
             }
         }
@@ -58,10 +58,10 @@ class MyApp extends StatelessWidget {
               textWelcome: 'Welcome to',
               routeName: 'mathematics',
             ),
-        'mathematics': (context) => const Mathematics(),
-        'physics': (context) => const Physics(),
-        'chemistry': (context) => const Chemistry(),
-        'geology': (context) => const Geology(),
+        'mathematics': (context) => const MathematicsW(),
+        'physics': (context) => const PhysicsW(),
+        'chemistry': (context) => const ChemistryW(),
+        'geology': (context) => const GeologyW(),
         'botanyAndMicrobiology': (context) => const BotanyAndMicrobiology(),
         'zoologyAndEntomology': (context) => const ZoologyAndEntomology(),
         'logInScreen': (context) => const LogIn(),
