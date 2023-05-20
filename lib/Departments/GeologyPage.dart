@@ -17,9 +17,6 @@ class Geology_data extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Geology Department'),
-      ),
       body: ListView(
         children: const [
           Chapter1(),

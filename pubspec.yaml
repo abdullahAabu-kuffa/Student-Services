@@ -49,8 +49,15 @@ dependencies:
   tuple: ^2.0.1
 
 
+
   syncfusion_flutter_pdfviewer: ^20.3.59
   path_provider: ^2.0.13
+
+  flutter_custom_tabs: ^1.0.4
+  googleapis: ^8.1.0
+  googleapis_auth: ^1.4.0
+  
+
 
 dev_dependencies:
   flutter_test:

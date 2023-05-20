@@ -8,7 +8,7 @@ import 'package:students_app/Departments/MathematicsPage.dart';
 import 'package:students_app/Departments/PhysicsPage.dart';
 import 'package:students_app/Departments/ZoologyPage.dart';
 
-final Color darkBlue = const Color.fromARGB(255, 18, 32, 47);
+const Color darkBlue = Color.fromARGB(255, 1, 87, 155);
 
 void main() {
   runApp(MyApp());

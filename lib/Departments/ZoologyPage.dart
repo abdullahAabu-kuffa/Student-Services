@@ -17,9 +17,6 @@ class Zoology_data extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Zoology Department'),
-      ),
       body: ListView(
         children: const [
           Chapter1(),

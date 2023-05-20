@@ -17,9 +17,6 @@ class Mathematics_data extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Mathematics Department'),
-      ),
       body: ListView(
         children: const [
           Chapter1(),
