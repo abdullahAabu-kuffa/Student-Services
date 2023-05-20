@@ -1,14 +1,18 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:tuple/tuple.dart';
 
-class TableData extends StatefulWidget {
-  const TableData({super.key});
+class TableData extends StatelessWidget {
+  const TableData({
+    super.key,
+    this.rowMap,
+    this.secRowMap,
+  });
 
-  @override
-  State<TableData> createState() => _TableData();
-}
+  final rowMap;
+  final secRowMap;
 
-class _TableData extends State<TableData> {
   @override
   Widget build(BuildContext context) {
     final Map<String, dynamic> args =
@@ -180,6 +184,8 @@ class _TableData extends State<TableData> {
                 ),
               ],
             )),
+
+          
           ],
         ),
       ),
