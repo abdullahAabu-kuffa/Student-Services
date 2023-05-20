@@ -47,6 +47,9 @@ dependencies:
 
   gsheets: ^0.4.2
   tuple: ^2.0.1
+  flutter_custom_tabs: ^1.0.4
+  googleapis: ^8.1.0
+  googleapis_auth: ^1.4.0
   
 
 dev_dependencies:
