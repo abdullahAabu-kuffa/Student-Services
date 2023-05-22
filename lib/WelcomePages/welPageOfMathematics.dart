@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:students_app/WelcomePages/welPageOfFacultyOfScience.dart';
 
-class Mathematics extends StatelessWidget {
-  const Mathematics({super.key});
+class MathematicsW extends StatelessWidget {
+  const MathematicsW({super.key});
 
   @override
   Widget build(BuildContext context) {

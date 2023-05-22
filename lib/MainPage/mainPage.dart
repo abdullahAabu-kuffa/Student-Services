@@ -29,7 +29,7 @@ class _MainPageState extends State<MainPage> {
   final PersistentTabController _controller =
       PersistentTabController(initialIndex: 0);
   String _title = "Home";
-   final _screens = const [
+  final _screens = const [
     HomePage(),
     DepartementsPage(),
     SearchPage(),
@@ -98,6 +98,7 @@ class _MainPageState extends State<MainPage> {
         drawer: Drawer(
           child: Column(children: [
             UserAccountsDrawerHeader(
+              decoration: BoxDecoration(color: mainColor),
               currentAccountPicture: CircleAvatar(
                 child: Image.network(
                   widget.photo,
@@ -163,8 +164,8 @@ class _MainPageState extends State<MainPage> {
           // navBarStyle: NavBarStyle.style6,
           onItemSelected: (index) {
             setState(() {
-          _title = _navBarItems[index].title!;
-        });
+              _title = _navBarItems[index].title!;
+            });
           },
         ),
       ),

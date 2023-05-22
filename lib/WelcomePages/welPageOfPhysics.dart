@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:students_app/WelcomePages/welPageOfFacultyOfScience.dart';
 
-class Physics extends StatelessWidget {
-  const Physics({super.key});
+class PhysicsW extends StatelessWidget {
+  const PhysicsW({super.key});
 
   @override
   Widget build(BuildContext context) {
