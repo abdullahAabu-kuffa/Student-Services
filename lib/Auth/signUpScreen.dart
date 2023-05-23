@@ -7,6 +7,8 @@ import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:students_app/Auth/buttonOfLogIn&SignUp.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_email_sender/flutter_email_sender.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -17,6 +19,7 @@ class SignUp extends StatefulWidget {
 
 class _SignUpState extends State<SignUp> {
   final _Auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   late String name;
   late String email;
@@ -28,11 +31,34 @@ class _SignUpState extends State<SignUp> {
   bool _obscureActionConfirm = true;
   final TextEditingController _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  late var _passwordError = null;
+  final _passwordError = null;
+
+  void sendVerificationEmail(String recipientEmail) async {
+    final Email email = Email(
+      body: 'This is a verification email',
+      subject: 'Email Verification',
+      recipients: [recipientEmail],
+      isHTML: false,
+    );
+
+    String platformResponse;
+
+    try {
+      await FlutterEmailSender.send(email);
+      platformResponse = 'Verification email sent successfully';
+    } catch (error) {
+      platformResponse = error.toString();
+    }
+
+    // Process the platform response accordingly (e.g., display a message)
+    print(platformResponse);
+  }
+
   @override
   Widget build(BuildContext context) {
     return ModalProgressHUD(
       inAsyncCall: signLoading,
+      opacity: 0,
       child: Scaffold(
         body: Container(
           padding: const EdgeInsets.all(35),
@@ -87,6 +113,15 @@ class _SignUpState extends State<SignUp> {
                           email = value;
                         },
                         keyboardType: TextInputType.emailAddress,
+                        //check the validation
+                        validator: (val) {
+                          return RegExp(
+                                      r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                                  .hasMatch(val!)
+                              ? null
+                              : "Please enter a valid email";
+                        },
+
                         decoration: const InputDecoration(
                           hintText: 'email',
                           labelText: 'email',
@@ -117,6 +152,14 @@ class _SignUpState extends State<SignUp> {
                           password = value;
                         },
                         obscureText: _obscureAction,
+                        //password Validation
+                        validator: (val) {
+                          if (val!.length < 6) {
+                            return "Password must be at least 6 characters";
+                          } else {
+                            return null;
+                          }
+                        },
                         keyboardType: TextInputType.visiblePassword,
                         decoration: InputDecoration(
                           hintText: 'password',
@@ -220,12 +263,25 @@ class _SignUpState extends State<SignUp> {
                     try {
                       setState(() {
                         signLoading = true;
-                      });
+                      }); // Inside your form submission function
+                      void sendVerificationEmailOnSignUp() {
+                        sendVerificationEmail(email);
+                        // Perform additional sign-up logic or show a success message
+                      }
+
+                      sendVerificationEmailOnSignUp();
                       if (password == confirmPassword) {
-                        await _Auth.createUserWithEmailAndPassword(
-                            email: email, password: password);
+                        UserCredential userCredential =
+                            await _Auth.createUserWithEmailAndPassword(
+                                email: email, password: password);
                         setState(() {
                           signLoading = false;
+                        });
+                        await _firestore
+                            .collection('users')
+                            .doc(userCredential.user?.uid)
+                            .set({
+                          'name': name,
                         });
                         var snackBar = const SnackBar(
                           content: Text(
@@ -235,7 +291,8 @@ class _SignUpState extends State<SignUp> {
                           ),
                           behavior: SnackBarBehavior.floating,
                           backgroundColor: Colors.black54,
-                          width: 200,
+                          margin:
+                              EdgeInsets.only(bottom: 100, left: 80, right: 80),
                         );
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
                         Navigator.of(context)
