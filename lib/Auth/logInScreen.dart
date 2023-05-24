@@ -178,7 +178,7 @@ class _LogInState extends State<LogIn> {
                       .get()
                       .then((DocumentSnapshot snapshot) {
                     var userData = snapshot.data();
-                    final nameid = userData!;
+                    final nameid = userData.toString();
 
                     Navigator.pushReplacement(
                         context,

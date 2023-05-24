@@ -269,7 +269,7 @@ class _SignUpState extends State<SignUp> {
                         // Perform additional sign-up logic or show a success message
                       }
 
-                      sendVerificationEmailOnSignUp();
+                     // sendVerificationEmailOnSignUp();
                       if (password == confirmPassword) {
                         UserCredential userCredential =
                             await _Auth.createUserWithEmailAndPassword(
