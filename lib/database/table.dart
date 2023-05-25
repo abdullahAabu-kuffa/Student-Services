@@ -30,14 +30,11 @@ class TableData extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: ListView(
             children: [
-              const SizedBox(
-                height: 15,
-              ),
               Center(
                   child: Text(
                 rowMap[1],
                 style: const TextStyle(
-                  fontSize: 20.0,
+                  fontSize: 25.0,
                   fontWeight: FontWeight.w400,
                 ),
               )),
