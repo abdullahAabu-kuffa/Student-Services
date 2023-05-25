@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tuple/tuple.dart';
 
+import '../Auth/buttonOfLogIn&SignUp.dart';
+
 class TableData extends StatefulWidget {
   const TableData({super.key});
 
@@ -26,6 +28,7 @@ class _TableData extends State<TableData> {
       // ),
       body: Center(
         child: ListView(
+          
           children: [
             const SizedBox(
               height: 15,
@@ -180,6 +183,49 @@ class _TableData extends State<TableData> {
                 ),
               ],
             )),
+            const SizedBox(
+              height: 15,
+            ),
+            Center(
+                child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text(
+                  "الساعات المتبقيه ",
+                  style: TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+                const SizedBox(
+                  width: 50,
+                ),
+                Text(
+                  rowMap[27],
+                  style: const TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+              ],
+            )),
+            // const SizedBox(
+            //   height: 15,
+            // ),
+            // Center(
+            //   child: Row(
+            //     mainAxisAlignment: MainAxisAlignment.center,
+            //     children: [
+            //       ButtonOfLogInSignUp(
+            //         onPressed: () {},
+            //         title: 'More',
+            //       )
+            //     ],
+            //   ),
+            // ),
+            // const SizedBox(
+            //   height: 15,
+            // ),
           ],
         ),
       ),
