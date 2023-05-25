@@ -4,13 +4,7 @@ import 'package:tuple/tuple.dart';
 class TableData extends StatelessWidget {
   const TableData({
     super.key,
-    this.rowMap,
-    this.secRowMap,
   });
-
-  final rowMap;
-  final secRowMap;
-
   @override
   Widget build(BuildContext context) {
     final Map<String, dynamic> args =
@@ -208,23 +202,6 @@ class TableData extends StatelessWidget {
                 ),
               ],
             )),
-            // const SizedBox(
-            //   height: 15,
-            // ),
-            // Center(
-            //   child: Row(
-            //     mainAxisAlignment: MainAxisAlignment.center,
-            //     children: [
-            //       ButtonOfLogInSignUp(
-            //         onPressed: () {},
-            //         title: 'More',
-            //       )
-            //     ],
-            //   ),
-            // ),
-            // const SizedBox(
-            //   height: 15,
-            // ),
             ],
           ),
         ),
