@@ -1,18 +1,10 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:tuple/tuple.dart';
 
 class TableData extends StatelessWidget {
   const TableData({
     super.key,
-    this.rowMap,
-    this.secRowMap,
   });
-
-  final rowMap;
-  final secRowMap;
-
   @override
   Widget build(BuildContext context) {
     final Map<String, dynamic> args =
@@ -29,6 +21,7 @@ class TableData extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: ListView(
+          
             children: [
               Center(
                   child: Text(
@@ -180,6 +173,32 @@ class TableData extends StatelessWidget {
                   ),
                 ],
               )),
+            const SizedBox(
+              height: 15,
+            ),
+            Center(
+                child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text(
+                  "الساعات المتبقيه ",
+                  style: TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+                const SizedBox(
+                  width: 50,
+                ),
+                Text(
+                  rowMap[27],
+                  style: const TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+              ],
+            )),
             ],
           ),
         ),
