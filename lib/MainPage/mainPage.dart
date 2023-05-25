@@ -9,18 +9,17 @@ import 'package:students_app/MainPage/chatGPT.dart';
 import 'package:students_app/MainPage/departementsPage.dart';
 import 'package:students_app/MainPage/homePage.dart';
 import 'package:students_app/MainPage/notesPage.dart';
-// import 'package:students_app/MainPage/profilePage.dart';
+
 import 'package:students_app/MainPage/searchPage.dart';
 
 Color mainColor = const Color.fromARGB(255, 1, 87, 155);
 
 class MainPage extends StatefulWidget {
-  const MainPage(
-      {Key? key, required this.name, required this.email, required this.photo})
+  const MainPage({Key? key, this.name, this.email, this.photo})
       : super(key: key);
-  final String name;
-  final String email;
-  final String photo;
+  final name;
+  final email;
+  final photo;
 
   @override
   State<MainPage> createState() => _MainPageState();
@@ -29,8 +28,9 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   final PersistentTabController _controller =
       PersistentTabController(initialIndex: 0);
+
   String _title = "Home";
-   final _screens = const [
+  final _screens = const [
     HomePage(),
     DepartementsPage(),
     SearchPage(),
@@ -99,6 +99,7 @@ class _MainPageState extends State<MainPage> {
         drawer: Drawer(
           child: Column(children: [
             UserAccountsDrawerHeader(
+              decoration: BoxDecoration(color: mainColor),
               currentAccountPicture: CircleAvatar(
                 child: Image.network(
                   widget.photo,
@@ -164,8 +165,8 @@ class _MainPageState extends State<MainPage> {
           // navBarStyle: NavBarStyle.style6,
           onItemSelected: (index) {
             setState(() {
-          _title = _navBarItems[index].title!;
-        });
+              _title = _navBarItems[index].title!;
+            });
           },
         ),
       ),

@@ -78,7 +78,7 @@ class _GradePageState extends State<GradePage> {
                   ],
                   dropdownDecoratorProps: const DropDownDecoratorProps(
                     dropdownSearchDecoration: InputDecoration(
-                      labelText: "Choose Batch",
+                      labelText: "Choose Year",
                     ),
                   ),
                   onChanged: itemSelectionChangedYear,
@@ -163,13 +163,14 @@ class _GradePageState extends State<GradePage> {
                   // final rowMap = tuple.item1;
                   // final secRowMap = tuple.item2;
                   //لو هتطبع كله
-                  //print(rowMap);
+                  //print(rowMap[2]);
                   //print(secrowMap);
                   //لو عايز عنصر عنصر هتعمل كده
                   //print(secRowMap[2]);
                   // _userSheet= await UserSheetsApi.getWorkSheet(Spreadsheet,title:sheettitle);
                   // _getWorkSheet(sheettitle);
                   // print(sheetname);
+
 
                   setState(() {
                     isSearching = false;
