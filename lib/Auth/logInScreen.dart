@@ -2,6 +2,7 @@
 
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
@@ -32,12 +33,15 @@ class _LogInState extends State<LogIn> {
   final _Auth = FirebaseAuth.instance;
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
   final GoogleSignIn _googleSignIn = GoogleSignIn();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: ModalProgressHUD(
       inAsyncCall: loginLoading,
+      opacity: 0,
       child: Container(
         padding: const EdgeInsets.all(15),
         width: double.infinity,
@@ -151,8 +155,9 @@ class _LogInState extends State<LogIn> {
                   loginLoading = true;
                 });
                 try {
-                  await _Auth.signInWithEmailAndPassword(
-                      email: email, password: password);
+                  UserCredential userCredential =
+                      await _Auth.signInWithEmailAndPassword(
+                          email: email, password: password);
                   setState(() {
                     loginLoading = false;
                   });
@@ -164,17 +169,26 @@ class _LogInState extends State<LogIn> {
                     ),
                     behavior: SnackBarBehavior.floating,
                     backgroundColor: Colors.black54,
-                    width: 200,
+                    margin: EdgeInsets.only(bottom: 100, left: 80, right: 80),
                   );
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                  Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => MainPage(
-                              name: 'Abu-kuffa',
-                              email: email,
-                              photo:
-                                  'https://drive.google.com/file/d/1AzYxONhI7fvDYjU5BUCwimnhbAVfwXbq/view?usp=sharing')));
+                  var nameUser = await _firestore
+                      .collection('users')
+                      .doc(userCredential.user?.uid)
+                      .get()
+                      .then((DocumentSnapshot snapshot) {
+                    var userData = snapshot.data();
+                    final nameid = userData.toString();
+
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => MainPage(
+                                name: nameid,
+                                email: email,
+                                photo:
+                                    'https://drive.google.com/file/d/1AzYxONhI7fvDYjU5BUCwimnhbAVfwXbq/view?usp=sharing')));
+                  });
                 } on SocketException {
                   print("error connection");
                 } catch (e) {
@@ -234,11 +248,13 @@ class _LogInState extends State<LogIn> {
                       content: Text(
                         textAlign: TextAlign.center,
                         'Login successfully!',
-                        style: TextStyle(color: Colors.greenAccent),
+                        style: TextStyle(
+                            color: Colors.greenAccent,
+                            fontWeight: FontWeight.bold),
                       ),
                       behavior: SnackBarBehavior.floating,
                       backgroundColor: Colors.black54,
-                      width: 200,
+                      margin: EdgeInsets.only(bottom: 100, left: 80, right: 80),
                     );
                     ScaffoldMessenger.of(context).showSnackBar(snackBar);
                     Navigator.pushReplacement(

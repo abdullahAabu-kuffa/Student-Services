@@ -28,6 +28,7 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   final PersistentTabController _controller =
       PersistentTabController(initialIndex: 0);
+
   String _title = "Home";
   final _screens = const [
     HomePage(),

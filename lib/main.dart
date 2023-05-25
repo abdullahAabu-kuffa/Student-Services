@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.black,
       ),
-      initialRoute: 'logInScreen',
+      initialRoute: 'facultyOfScience',
       onGenerateRoute: (settings) {
         switch (settings.name) {
           case 'homePage':
