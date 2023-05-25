@@ -7,6 +7,12 @@ import 'package:students_app/Departments/GeologyPage.dart';
 import 'package:students_app/Departments/MathematicsPage.dart';
 import 'package:students_app/Departments/PhysicsPage.dart';
 import 'package:students_app/Departments/ZoologyPage.dart';
+import 'package:students_app/Levels_of_departments/levels_of_botany.dart';
+import 'package:students_app/Levels_of_departments/levels_of_chemDep.dart';
+import 'package:students_app/Levels_of_departments/levels_of_geoDep.dart';
+import 'package:students_app/Levels_of_departments/levels_of_mathematics.dart';
+import 'package:students_app/Levels_of_departments/levels_of_phyiscsDep.dart';
+import 'package:students_app/Levels_of_departments/levels_of_zoologyDep.dart';
 
 const Color darkBlue = Color.fromARGB(255, 1, 87, 155);
 
@@ -47,7 +53,7 @@ class Chemistry extends StatelessWidget {
           onTap: () {
             Navigator.push(context,
                 MaterialPageRoute(builder: (BuildContext context) {
-              return const ChemistryPage();
+              return const LevelsOfChemistery();
             }));
           },
           child: Container(
@@ -94,7 +100,7 @@ class Physics extends StatelessWidget {
           onTap: () {
             Navigator.push(context,
                 MaterialPageRoute(builder: (BuildContext context) {
-              return const PhysicsPage();
+              return const LevelsOfPhysics();
             }));
           },
           child: Container(
@@ -140,7 +146,7 @@ class Mathematics extends StatelessWidget {
           onTap: () {
             Navigator.push(context,
                 MaterialPageRoute(builder: (BuildContext context) {
-              return const MathematicsPage();
+              return const LevelsOfMathematics();
             }));
           },
           child: Container(
@@ -187,7 +193,7 @@ class Geology extends StatelessWidget {
           onTap: () {
             Navigator.push(context,
                 MaterialPageRoute(builder: (BuildContext context) {
-              return const GeologyPage();
+              return const LevelsOfGeology();
             }));
           },
           child: Container(
@@ -233,7 +239,7 @@ class Zoology extends StatelessWidget {
           onTap: () {
             Navigator.push(context,
                 MaterialPageRoute(builder: (BuildContext context) {
-              return const ZoologyPage();
+              return const LevelsOfZoology();
             }));
           },
           child: Container(
@@ -278,7 +284,7 @@ class Botany extends StatelessWidget {
           onTap: () {
             Navigator.push(context,
                 MaterialPageRoute(builder: (BuildContext context) {
-              return const BotanyPage();
+              return const LevelsOfBotany();
             }));
           },
           child: Container(
