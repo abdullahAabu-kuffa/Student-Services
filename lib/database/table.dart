@@ -21,14 +21,13 @@ class TableData extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: ListView(
-          
             children: [
               Center(
                   child: Text(
                 rowMap[1],
                 style: const TextStyle(
                   fontSize: 25.0,
-                  fontWeight: FontWeight.w400,
+                  fontWeight: FontWeight.bold,
                 ),
               )),
               const SizedBox(
@@ -173,32 +172,32 @@ class TableData extends StatelessWidget {
                   ),
                 ],
               )),
-            const SizedBox(
-              height: 15,
-            ),
-            Center(
-                child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text(
-                  "الساعات المتبقيه ",
-                  style: TextStyle(
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.w400,
+              const SizedBox(
+                height: 15,
+              ),
+              Center(
+                  child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    "الساعات المتبقيه ",
+                    style: TextStyle(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.w400,
+                    ),
                   ),
-                ),
-                const SizedBox(
-                  width: 50,
-                ),
-                Text(
-                  rowMap[27],
-                  style: const TextStyle(
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.w400,
+                  const SizedBox(
+                    width: 50,
                   ),
-                ),
-              ],
-            )),
+                  Text(
+                    rowMap[27],
+                    style: const TextStyle(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                ],
+              )),
             ],
           ),
         ),
