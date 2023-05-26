@@ -94,7 +94,7 @@ class _GradePageState extends State<GradePage> {
                   items: const [
                     "First Semester",
                     "Second Semester",
-                    // "Summer Semester",
+                    "Summer Semester",
                   ],
                   dropdownDecoratorProps: const DropDownDecoratorProps(
                     dropdownSearchDecoration: InputDecoration(
@@ -142,6 +142,7 @@ class _GradePageState extends State<GradePage> {
                     isSearching = true;
                   });
                   getSheetTitle(selectedSemester, selectedYear);
+                  print(sheettitle);
                   try {
                     final tuple = await retrieveUserByKey();
                     Navigator.of(context).pushNamed(
