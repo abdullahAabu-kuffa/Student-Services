@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:students_app/Departments/Departments.dart';
-
+// import 'package:students_app/Departments/Departments.dart';
 import '../subjeccts_of_departments/chemistry_subjects.dart';
 
 class LevelsOfChemistery extends StatelessWidget {
@@ -34,7 +33,7 @@ class LevelsOfChemistery extends StatelessWidget {
                   MaterialPageRoute(
                       builder: (context) => const SubjectsOfChemistery()));
             },
-            trailingIcon: Icon(Icons.arrow_circle_right, size: 40),
+            trailingIcon: const Icon(Icons.arrow_circle_right, size: 40),
             child: const Text(
               "First Level",
               style: TextStyle(
@@ -53,7 +52,7 @@ class LevelsOfChemistery extends StatelessWidget {
                   MaterialPageRoute(
                       builder: (context) => const SubjectsOfChemistery()));
             },
-            trailingIcon: Icon(Icons.arrow_circle_right, size: 40),
+            trailingIcon: const Icon(Icons.arrow_circle_right, size: 40),
             child: const Text(
               "Second Level",
               style: TextStyle(
@@ -72,7 +71,7 @@ class LevelsOfChemistery extends StatelessWidget {
                   MaterialPageRoute(
                       builder: (context) => const SubjectsOfChemistery()));
             },
-            trailingIcon: Icon(Icons.arrow_circle_right, size: 40),
+            trailingIcon: const Icon(Icons.arrow_circle_right, size: 40),
             child: const Text(
               "Third Level",
               style: TextStyle(
@@ -91,7 +90,7 @@ class LevelsOfChemistery extends StatelessWidget {
                   MaterialPageRoute(
                       builder: (context) => const SubjectsOfChemistery()));
             },
-            trailingIcon: Icon(Icons.arrow_circle_right, size: 40),
+            trailingIcon: const Icon(Icons.arrow_circle_right, size: 40),
             child: const Text(
               "Fourth Level",
               style: TextStyle(
