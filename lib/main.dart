@@ -1,6 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:students_app/MainPage/homePage.dart';
+import 'package:students_app/MainPage/home_page.dart';
 import 'package:students_app/MainPage/searchPage.dart';
 import 'package:students_app/database/table.dart';
 
@@ -48,6 +48,7 @@ class MyApp extends StatelessWidget {
               });
             }
         }
+        return null;
       },
       routes: {
         'facultyOfScience': (context) => const FacultyOfScience(
