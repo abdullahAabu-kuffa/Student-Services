@@ -149,11 +149,14 @@ class _AppointmentEditorState extends State<AppointmentEditor> {
                 const SizedBox(height: 16.0),
                 TextFormField(
                   autofocus: false,
+                  keyboardType: TextInputType.number,
                   decoration:
                       const InputDecoration(labelText: 'number of repeats'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter a number';
+                    }else if(value=='0'){
+                      return 'Please enter a number > 0 ';
                     }
                     return null;
                   },
