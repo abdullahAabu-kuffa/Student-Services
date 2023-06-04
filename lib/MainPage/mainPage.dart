@@ -30,24 +30,18 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   final PersistentTabController _controller =
-      PersistentTabController(initialIndex: 0);
+      PersistentTabController(initialIndex: 2);
 
   String _title = "Home";
   final _screens = const [
-    HomePage1(),
     HomePage(),
     DepartementsPage(),
+    HomePage1(),
     SearchPage(),
     NotesPage(),
   ];
 
   final _navBarItems = [
-    PersistentBottomNavBarItem(
-      icon: const Icon(CupertinoIcons.home),
-      title: ("Home"),
-      activeColorPrimary: mainColor,
-      inactiveColorPrimary: CupertinoColors.systemGrey,
-    ),
     PersistentBottomNavBarItem(
       icon: const Icon(CupertinoIcons.calendar),
       title: ("Calendar"),
@@ -57,6 +51,12 @@ class _MainPageState extends State<MainPage> {
     PersistentBottomNavBarItem(
       icon: const Icon(CupertinoIcons.text_badge_minus),
       title: ("Departments"),
+      activeColorPrimary: mainColor,
+      inactiveColorPrimary: CupertinoColors.systemGrey,
+    ),
+    PersistentBottomNavBarItem(
+      icon: const Icon(CupertinoIcons.home),
+      title: ("Home"),
       activeColorPrimary: mainColor,
       inactiveColorPrimary: CupertinoColors.systemGrey,
     ),

@@ -17,6 +17,7 @@ class Zoology_data extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: ListView(
         children: const [
           Chapter1(),
