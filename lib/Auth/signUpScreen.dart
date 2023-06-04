@@ -269,7 +269,7 @@ class _SignUpState extends State<SignUp> {
                         // Perform additional sign-up logic or show a success message
                       }
 
-                     // sendVerificationEmailOnSignUp();
+                      // sendVerificationEmailOnSignUp();
                       if (password == confirmPassword) {
                         UserCredential userCredential =
                             await _Auth.createUserWithEmailAndPassword(
@@ -284,6 +284,7 @@ class _SignUpState extends State<SignUp> {
                           'name': name,
                         });
                         var snackBar = const SnackBar(
+                          duration: Duration(seconds: 1),
                           content: Text(
                             textAlign: TextAlign.center,
                             'Signup successfully!',

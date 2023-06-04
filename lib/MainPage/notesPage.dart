@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
+import '../screens/home_screen.dart';
 
 class NotesPage extends StatefulWidget {
   const NotesPage({super.key});
@@ -15,7 +14,7 @@ class _NotesPageState extends State<NotesPage> {
     return const Scaffold(
       backgroundColor: Colors.white,
       body: Center(
-        child: Text('NotesPage'),
+        child: HomeScreen(),
       ),
     );
   }

@@ -162,6 +162,7 @@ class _LogInState extends State<LogIn> {
                     loginLoading = false;
                   });
                   var snackBar = const SnackBar(
+                    duration: Duration(seconds: 1),
                     content: Text(
                       textAlign: TextAlign.center,
                       'Login successfully!',
@@ -245,6 +246,7 @@ class _LogInState extends State<LogIn> {
                       });
                     });
                     var snackBar = const SnackBar(
+                      duration: Duration(seconds: 1),
                       content: Text(
                         textAlign: TextAlign.center,
                         'Login successfully!',
