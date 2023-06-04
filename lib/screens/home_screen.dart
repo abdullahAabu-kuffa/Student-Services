@@ -12,61 +12,60 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-Color mainColor = Color.fromARGB(255, 88, 165, 224);
-
 class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: mainColor,
+        backgroundColor: AppStyle.mainColor,
         body: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text("Your Recent Notes",
+              Text("Your Recent Notes",
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
                     fontSize: 22,
                   )),
-              const SizedBox(
+              SizedBox(
                 height: 20.0,
               ),
               Expanded(
-                  child: StreamBuilder<QuerySnapshot>(
-                stream:
-                    FirebaseFirestore.instance.collection("notes").snapshots(),
-                builder: (context, AsyncSnapshot snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
+                child: StreamBuilder<QuerySnapshot>(
+                  stream: FirebaseFirestore.instance
+                      .collection("notes")
+                      .snapshots(),
+                  builder: (context, AsyncSnapshot snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                    if (snapshot.hasData) {
+                      return GridView(
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2),
+                        children: snapshot.data!.docs
+                            .map((note) => noteCard(() {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              NoteReaderScreen(note)));
+                                }, note))
+                            .toList(),
+                      );
+                    }
+                    return Text(
+                      "there's no Notes",
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
                     );
-                  }
-                  if (snapshot.hasData) {
-                    return GridView(
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2),
-                      children: snapshot.data!.docs
-                          .map((note) => noteCard(() {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            NoteReaderScreen(note)));
-                              }, note))
-                          .toList(),
-                    );
-                  }
-                  return const Text(
-                    "there's no Notes",
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
-                  );
-                },
-              ))
+                  },
+                ),
+              )
             ],
           ),
         ),
@@ -75,8 +74,8 @@ class _HomeScreenState extends State<HomeScreen> {
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => NoteEditorScreen()));
           },
-          label: const Text("Add Note"),
-          icon: const Icon(Icons.add),
+          label: Text("Add Note"),
+          icon: Icon(Icons.add),
         ));
   }
 }

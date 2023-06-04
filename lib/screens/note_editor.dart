@@ -5,14 +5,15 @@ import 'package:flutter/material.dart';
 import '../style/app_style.dart';
 
 class NoteEditorScreen extends StatefulWidget {
-  const NoteEditorScreen({Key? key}) : super(key: key);
+  NoteEditorScreen({Key? key}) : super(key: key);
 
   @override
   State<NoteEditorScreen> createState() => _NoteEditorScreenState();
 }
 
 class _NoteEditorScreenState extends State<NoteEditorScreen> {
-  int color_id = 0xFF01579B;
+  String color_id = (Random().nextInt(AppStyle.cardsColor.length)).toString();
+  // int color_id = int.parse(color_ids);
   String date = DateTime.now().toString();
 
   TextEditingController _titleController = TextEditingController();
@@ -21,35 +22,35 @@ class _NoteEditorScreenState extends State<NoteEditorScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppStyle.cardsColor[1],
+      backgroundColor: AppStyle.cardsColor[int.parse(color_id)],
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             TextField(
               controller: _titleController,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 border: InputBorder.none,
                 hintText: 'Note Title',
               ),
               style: AppStyle.mainTitle,
             ),
-            const SizedBox(
+            SizedBox(
               height: 8.0,
             ),
             Text(
               date,
               style: AppStyle.dateTitle,
             ),
-            const SizedBox(
+            SizedBox(
               height: 28.0,
             ),
             TextField(
               controller: _mainController,
               keyboardType: TextInputType.multiline,
               maxLines: null,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 border: InputBorder.none,
                 hintText: 'Note Content',
               ),
@@ -64,14 +65,14 @@ class _NoteEditorScreenState extends State<NoteEditorScreen> {
             "note_title": _titleController.text,
             "creation_date": date,
             "note_content": _mainController.text,
-            // "color_id": color_id,
+            "color_id": int.parse(color_id),
           }).then((value) {
             print(value.id);
             Navigator.pop(context);
           }).catchError(
               (error) => print("failed to add new note due to $error"));
         },
-        child: const Icon(Icons.save),
+        child: Icon(Icons.save),
       ),
     );
   }

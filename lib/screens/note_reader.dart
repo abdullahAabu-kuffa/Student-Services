@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:students_app/Departments/Departments.dart';
 import '../style/app_style.dart';
 
 class NoteReaderScreen extends StatefulWidget {
@@ -14,11 +13,11 @@ class NoteReaderScreen extends StatefulWidget {
 class _NoteReaderScreenState extends State<NoteReaderScreen> {
   @override
   Widget build(BuildContext context) {
-    int color_id = 0xFF01579B;
+    String color_id = widget.doc['color_id'];
     return Scaffold(
-      backgroundColor: AppStyle.cardsColor[1],
+      backgroundColor: AppStyle.cardsColor[int.parse(color_id)],
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -26,14 +25,14 @@ class _NoteReaderScreenState extends State<NoteReaderScreen> {
               widget.doc["note_title"],
               style: AppStyle.mainTitle,
             ),
-            const SizedBox(
+            SizedBox(
               height: 4.0,
             ),
             Text(
               widget.doc["creation_date"],
               style: AppStyle.dateTitle,
             ),
-            const SizedBox(
+            SizedBox(
               height: 28.0,
             ),
             Text(
