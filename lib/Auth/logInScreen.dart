@@ -165,7 +165,7 @@ class _LogInState extends State<LogIn> {
                     duration: Duration(seconds: 1),
                     content: Text(
                       textAlign: TextAlign.center,
-                      'Login successfully!',
+                      'Logged in successfully!',
                       style: TextStyle(color: Colors.greenAccent),
                     ),
                     behavior: SnackBarBehavior.floating,
@@ -249,7 +249,7 @@ class _LogInState extends State<LogIn> {
                       duration: Duration(seconds: 1),
                       content: Text(
                         textAlign: TextAlign.center,
-                        'Login successfully!',
+                        'Logged in successfully!',
                         style: TextStyle(
                             color: Colors.greenAccent,
                             fontWeight: FontWeight.bold),

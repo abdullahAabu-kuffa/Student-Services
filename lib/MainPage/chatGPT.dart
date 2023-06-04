@@ -80,7 +80,7 @@ class _HomePageState extends State<chatGPT> {
                       Expanded(
                           child: TextField(
                         controller: chatTextEditing,
-                        style: TextStyle(color: Colors.white60),
+                        style: const TextStyle(color: Colors.white60),
                         decoration: InputDecoration.collapsed(
                             hintText: "send a message.",
                             hintStyle: TextStyle(color: Colors.white70)),
@@ -90,6 +90,9 @@ class _HomePageState extends State<chatGPT> {
                             setState(() {
                               chat.add(chatTextEditing.text);
                               sendToChatGpt();
+                            });
+                            setState(() {
+                              chatTextEditing.clear();
                             });
                           },
                           child: const Icon(

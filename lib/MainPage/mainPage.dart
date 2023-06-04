@@ -30,7 +30,7 @@ class _MainPageState extends State<MainPage> {
       PersistentTabController(initialIndex: 0);
 
   String _title = "Home";
-  final _screens =  [
+  final _screens = [
     HomePage(),
     DepartementsPage(),
     SearchPage(),
@@ -132,20 +132,50 @@ class _MainPageState extends State<MainPage> {
               ),
             ),
             const Divider(thickness: 1),
-            TextButton(
-              onPressed: () async {
-                setState(() {
-                  signOutLoading = true;
-                });
-                await _auth.signOut();
-                Navigator.of(context).pushReplacementNamed('logInScreen');
-                setState(() {
-                  signOutLoading = false;
-                });
+            GestureDetector(
+              onTap: () async {
+                showDialog(
+                    barrierDismissible: false,
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: const Text("Logout"),
+                        content: const Text("Are you Sure you want to Logout?"),
+                        actions: [
+                          IconButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              icon: const Icon(
+                                Icons.cancel,
+                                color: Colors.red,
+                              )),
+                          IconButton(
+                              onPressed: () async {
+                                setState(() {
+                                  signOutLoading = true;
+                                });
+                                await _auth.signOut();
+                                Navigator.of(context)
+                                    .pushReplacementNamed('logInScreen');
+                                setState(() {
+                                  signOutLoading = false;
+                                });
+                              },
+                              icon: const Icon(
+                                Icons.done,
+                                color: Colors.green,
+                              ))
+                        ],
+                      );
+                    });
               },
-              child: const ListTile(
-                leading: Icon(Icons.logout),
-                title: Text('Log out'),
+              child: TextButton(
+                onPressed: () {},
+                child: const ListTile(
+                  leading: Icon(Icons.logout),
+                  title: Text('Log out'),
+                ),
               ),
             ),
           ]),

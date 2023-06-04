@@ -57,7 +57,7 @@ class _GradePageState extends State<GradePage> {
               const SizedBox(height: 80),
               const Center(
                   child: Text(
-                'Search about your grade.',
+                'Search for your grade.',
                 style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
               )),
               const SizedBox(height: 15),

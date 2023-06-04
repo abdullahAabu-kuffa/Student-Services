@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:students_app/Departments/Departments.dart';
+import 'package:students_app/subjeccts_of_departments/Botany_subjects.dart';
 
 import '../subjeccts_of_departments/chemistry_subjects.dart';
 
@@ -32,7 +33,7 @@ class LevelsOfBotany extends StatelessWidget {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const SubjectsOfChemistery()));
+                      builder: (context) => const SubjectsOfBotany()));
             },
             trailingIcon: Icon(Icons.arrow_circle_right, size: 40),
             child: const Text(

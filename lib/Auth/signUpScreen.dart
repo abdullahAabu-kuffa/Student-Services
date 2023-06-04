@@ -287,7 +287,7 @@ class _SignUpState extends State<SignUp> {
                           duration: Duration(seconds: 1),
                           content: Text(
                             textAlign: TextAlign.center,
-                            'Signup successfully!',
+                            'Signed up successfully!',
                             style: TextStyle(color: Colors.greenAccent),
                           ),
                           behavior: SnackBarBehavior.floating,
