@@ -13,7 +13,8 @@ class NoteReaderScreen extends StatefulWidget {
 class _NoteReaderScreenState extends State<NoteReaderScreen> {
   @override
   Widget build(BuildContext context) {
-    String color_id = widget.doc['color_id'];
+    String color_id = widget.doc['color_id'].toString();
+
     return Scaffold(
       backgroundColor: AppStyle.cardsColor[int.parse(color_id)],
       body: Padding(

@@ -15,20 +15,20 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: AppStyle.mainColor,
+        backgroundColor: Colors.white,
         body: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Your Recent Notes",
+              const Text("Your Recent Notes",
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Color.fromARGB(255, 14, 112, 188),
                     fontWeight: FontWeight.bold,
                     fontSize: 22,
                   )),
-              SizedBox(
+              const SizedBox(
                 height: 20.0,
               ),
               Expanded(
@@ -38,26 +38,30 @@ class _HomeScreenState extends State<HomeScreen> {
                       .snapshots(),
                   builder: (context, AsyncSnapshot snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Center(
+                      return const Center(
                         child: CircularProgressIndicator(),
                       );
                     }
                     if (snapshot.hasData) {
                       return GridView(
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2),
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                        ),
                         children: snapshot.data!.docs
-                            .map((note) => noteCard(() {
+                            .map<Widget>((note) => noteCard(() {
                                   Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              NoteReaderScreen(note)));
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          NoteReaderScreen(note),
+                                    ),
+                                  );
                                 }, note))
                             .toList(),
                       );
                     }
-                    return Text(
+                    return const Text(
                       "there's no Notes",
                       style: TextStyle(
                         color: Colors.white,
@@ -74,8 +78,8 @@ class _HomeScreenState extends State<HomeScreen> {
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => NoteEditorScreen()));
           },
-          label: Text("Add Note"),
-          icon: Icon(Icons.add),
+          label: const Text("Add Note"),
+          icon: const Icon(Icons.add),
         ));
   }
 }

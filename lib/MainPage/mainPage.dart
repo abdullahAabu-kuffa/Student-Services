@@ -13,6 +13,7 @@ import 'package:students_app/MainPage/notesPage.dart';
 import 'package:students_app/MainPage/searchPage.dart';
 
 import '../Auth/logInScreen.dart';
+import 'homePage1.dart';
 
 Color mainColor = const Color.fromARGB(255, 1, 87, 155);
 
@@ -32,7 +33,8 @@ class _MainPageState extends State<MainPage> {
       PersistentTabController(initialIndex: 0);
 
   String _title = "Home";
-  final _screens = [
+  final _screens = const [
+    HomePage1(),
     HomePage(),
     DepartementsPage(),
     SearchPage(),
@@ -43,6 +45,12 @@ class _MainPageState extends State<MainPage> {
     PersistentBottomNavBarItem(
       icon: const Icon(CupertinoIcons.home),
       title: ("Home"),
+      activeColorPrimary: mainColor,
+      inactiveColorPrimary: CupertinoColors.systemGrey,
+    ),
+    PersistentBottomNavBarItem(
+      icon: const Icon(CupertinoIcons.calendar),
+      title: ("Calendar"),
       activeColorPrimary: mainColor,
       inactiveColorPrimary: CupertinoColors.systemGrey,
     ),
@@ -89,13 +97,17 @@ class _MainPageState extends State<MainPage> {
           elevation: 0,
           actions: [
             IconButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const chatGPT()),
-                  );
-                },
-                icon: const Icon(CupertinoIcons.chat_bubble_2_fill))
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const chatGPT()),
+                );
+              },
+              icon: Image.asset(
+                'images/ChatGPT.png',
+                color: Colors.white70,
+              ),
+            )
           ],
         ),
         drawer: Drawer(
@@ -123,6 +135,14 @@ class _MainPageState extends State<MainPage> {
               child: const ListTile(
                 leading: Icon(Icons.settings),
                 title: Text('Settings'),
+              ),
+            ),
+            const Divider(thickness: 1),
+            TextButton(
+              onPressed: () {},
+              child: const ListTile(
+                leading: Icon(Icons.settings_accessibility),
+                title: Text('About us'),
               ),
             ),
             const Divider(thickness: 1),
