@@ -50,133 +50,147 @@ class _GradePageState extends State<GradePage> {
         opacity: 0.0,
         inAsyncCall: isSearching,
         dismissible: true,
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const SizedBox(height: 80),
-              const Center(
-                  child: Text(
-                'Search for your grade.',
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-              )),
-              const SizedBox(height: 15),
-              SizedBox(
-                width: 300,
-                child: DropdownSearch<String>(
-                  popupProps: PopupProps.menu(
-                    showSelectedItems: true,
-                    disabledItemFn: (String s) => s.startsWith('I'),
-                  ),
-                  items: const [
-                    "2023/2022",
-                    "2022/2021",
-                    "2021/2020",
-                    "2020/2019"
-                  ],
-                  dropdownDecoratorProps: const DropDownDecoratorProps(
-                    dropdownSearchDecoration: InputDecoration(
-                      labelText: "Choose Year",
+        child: Form(
+          key: formKey,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const SizedBox(height: 80),
+                const Center(
+                    child: Text(
+                  'Search for your grade.',
+                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                )),
+                const SizedBox(height: 15),
+                SizedBox(
+                  width: 300,
+                  child: DropdownSearch<String>(
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Select a year';
+                      }
+                      return null;
+                    },
+                    popupProps: PopupProps.menu(
+                      showSelectedItems: true,
+                      disabledItemFn: (String s) => s.startsWith('I'),
                     ),
+                    items: const [
+                      "2023/2022",
+                      "2022/2021",
+                      "2021/2020",
+                      "2020/2019"
+                    ],
+                    dropdownDecoratorProps: const DropDownDecoratorProps(
+                      dropdownSearchDecoration: InputDecoration(
+                        labelText: "Choose Year",
+                      ),
+                    ),
+                    onChanged: itemSelectionChangedYear,
+                    // selectedItem: selectedYear,
                   ),
-                  onChanged: itemSelectionChangedYear,
-                  // selectedItem: selectedYear,
                 ),
-              ),
-              const SizedBox(height: 20),
-              SizedBox(
-                width: 300,
-                child: DropdownSearch<String>(
-                  popupProps: PopupProps.menu(
-                    showSelectedItems: true,
-                    disabledItemFn: (String s) => s.startsWith('I'),
-                  ),
-                  items: const [
-                    "First Semester",
-                    "Second Semester",
-                    "Summer Semester",
-                  ],
-                  dropdownDecoratorProps: const DropDownDecoratorProps(
-                    dropdownSearchDecoration: InputDecoration(
-                      labelText: "Choose Semester",
+                const SizedBox(height: 20),
+                SizedBox(
+                  width: 300,
+                  child: DropdownSearch<String>(
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Select a Semester';
+                      }
+                      return null;
+                    },
+                    popupProps: PopupProps.menu(
+                      showSelectedItems: true,
+                      disabledItemFn: (String s) => s.startsWith('I'),
                     ),
+                    items: const [
+                      "First Semester",
+                      "Second Semester",
+                      "Summer Semester",
+                    ],
+                    dropdownDecoratorProps: const DropDownDecoratorProps(
+                      dropdownSearchDecoration: InputDecoration(
+                        labelText: "Choose Semester",
+                      ),
+                    ),
+                    onChanged: itemSelectionChangedSemester,
+                    // selectedItem: selectedSemester,
                   ),
-                  onChanged: itemSelectionChangedSemester,
-                  // selectedItem: selectedSemester,
                 ),
-              ),
-              const SizedBox(height: 25),
-              SizedBox(
-                width: 300,
-                child: TextFormField(
-                  //style: const TextStyle(color: Colors.white),
-                  controller: idController,
-                  onChanged: (value) {},
-                  keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(
-                    // hintText: 'Enter your ID',
-                    labelText: 'Enter Your ID',
-                    prefixIcon: Icon(
-                      Icons.search,
-                      color: Colors.black54,
-                    ),
-                    fillColor: Colors.white,
-                    filled: true,
-                    contentPadding:
-                        EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                    enabledBorder: OutlineInputBorder(
+                const SizedBox(height: 25),
+                SizedBox(
+                  width: 300,
+                  child: TextFormField(
+                    //style: const TextStyle(color: Colors.white),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your ID';
+                      }
+                      return null;
+                    },
+                    controller: idController,
+                    onChanged: (value) {},
+                    keyboardType: TextInputType.number,
+                    decoration: const InputDecoration(
+                      // hintText: 'Enter your ID',
+                      labelText: 'Enter Your ID',
+                      prefixIcon: Icon(
+                        Icons.search,
+                        color: Colors.black54,
+                      ),
+                      fillColor: Colors.white,
+                      filled: true,
+                      contentPadding:
+                          EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                      enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                          borderSide:
+                              BorderSide(color: Colors.black54, width: 1.5)),
+                      focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(10)),
-                        borderSide:
-                            BorderSide(color: Colors.black54, width: 1.5)),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                      borderSide: BorderSide(color: Colors.blue, width: 1.5),
+                        borderSide: BorderSide(color: Colors.blue, width: 1.5),
+                      ),
                     ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 25),
-              ButtonOfLogInSignUp(
-                onPressed: () async {
-                  setState(() {
-                    isSearching = true;
-                  });
-                  getSheetTitle(selectedSemester, selectedYear);
-                  print(sheettitle);
-                  try {
-                    final tuple = await retrieveUserByKey();
-                    Navigator.of(context).pushNamed(
-                      '/table',
-                      arguments: {
-                        'data': tuple,
-                        // 'id': rowMap,
-                        // 'title': secRowMap,
-                      },
-                    );
-                  } catch (e) {
-                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                      content: Text('Not Found'),
-                      backgroundColor: Colors.red,
-                    ));
-                  }
-                  // final rowMap = tuple.item1;
-                  // final secRowMap = tuple.item2;
-                  //لو هتطبع كله
-                  //print(rowMap[2]);
-                  //print(secrowMap);
-                  //لو عايز عنصر عنصر هتعمل كده
-                  //print(secRowMap[2]);
-                  // _userSheet= await UserSheetsApi.getWorkSheet(Spreadsheet,title:sheettitle);
-                  // _getWorkSheet(sheettitle);
-                  // print(sheetname);
-
-                  setState(() {
-                    isSearching = false;
-                  });
-                },
-                title: 'Search',
-              )
-            ],
+                const SizedBox(height: 25),
+                ButtonOfLogInSignUp(
+                  onPressed: () async {
+                    final isValid = formKey.currentState!.validate();
+                    if (isValid) {
+                      setState(() {
+                      isSearching = true;
+                    });
+                    try {
+                      getSheetTitle(selectedSemester, selectedYear);
+                      print(sheettitle);
+                      final tuple = await retrieveUserByKey();
+                      Navigator.of(context).pushNamed(
+                        '/table',
+                        arguments: {
+                          'data': tuple,
+                          // 'id': rowMap,
+                          // 'title': secRowMap,
+                        },
+                      );
+                    } catch (e) {
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                        content: Text('Not Found'),
+                        backgroundColor: Colors.red,
+                      ));
+                    }
+                    setState(() {
+                      isSearching = false;
+                    });
+                    }
+                    
+                  },
+                  title: 'Search',
+                )
+              ],
+            ),
           ),
         ),
       ),
