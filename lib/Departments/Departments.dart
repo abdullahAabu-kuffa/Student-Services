@@ -1,7 +1,8 @@
+// ignore: file_names
 import 'package:flutter/material.dart';
 import 'package:students_app/Departments/square.dart';
 
-Color mainColor = Color.fromARGB(255, 88, 172, 236);
+Color mainColor = const Color.fromARGB(255, 88, 172, 236);
 
 class Departments extends StatelessWidget {
   final String title;
@@ -15,7 +16,7 @@ class Departments extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: SafeArea(
           child: ListView(
-            children: [
+            children:  const [
               Chemistry(),
               Physics(),
               Mathematics(),

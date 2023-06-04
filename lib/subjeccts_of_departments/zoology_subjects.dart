@@ -39,7 +39,7 @@ class SubjectsOfZoology extends StatelessWidget {
               decoration: const BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage("assets/zo1.png"),
-                    fit: BoxFit.fitHeight,
+                    fit: BoxFit.fill,
                     opacity: 0.7),
               ),
               child: Row(

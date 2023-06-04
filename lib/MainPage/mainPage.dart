@@ -7,7 +7,7 @@ import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:students_app/MainPage/chatGPT.dart';
 import 'package:students_app/MainPage/departementsPage.dart';
-import 'package:students_app/MainPage/homePage.dart';
+import 'package:students_app/MainPage/home_page.dart';
 import 'package:students_app/MainPage/notesPage.dart';
 
 import 'package:students_app/MainPage/searchPage.dart';
@@ -30,7 +30,7 @@ class _MainPageState extends State<MainPage> {
       PersistentTabController(initialIndex: 0);
 
   String _title = "Home";
-  final _screens = const [
+  final _screens =  [
     HomePage(),
     DepartementsPage(),
     SearchPage(),

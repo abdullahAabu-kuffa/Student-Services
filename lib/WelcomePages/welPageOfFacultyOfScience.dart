@@ -38,16 +38,8 @@ class FacultyOfScience extends StatelessWidget {
                   ),
                   const SizedBox(height: 10),
                   const Text(
-                    'Faculty of Science',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 10),
-                  const Text(
                     'Assiut University',
-                    style: TextStyle(color: Colors.white, fontSize: 25),
+                    style: TextStyle(color: Colors.white, fontSize: 20),
                   ),
                   const SizedBox(height: 100),
                   const Text(

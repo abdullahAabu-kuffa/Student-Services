@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-
-import 'package:flutter/material.dart';
-import 'package:students_app/Departments/BotanyPage.dart';
-import 'package:students_app/Departments/ChemistryPage.dart';
-import 'package:students_app/Departments/GeologyPage.dart';
-import 'package:students_app/Departments/MathematicsPage.dart';
-import 'package:students_app/Departments/PhysicsPage.dart';
-import 'package:students_app/Departments/ZoologyPage.dart';
+// import 'package:flutter/material.dart';
+// import 'package:students_app/Departments/BotanyPage.dart';
+// import 'package:students_app/Departments/ChemistryPage.dart';
+// import 'package:students_app/Departments/GeologyPage.dart';
+// import 'package:students_app/Departments/MathematicsPage.dart';
+// import 'package:students_app/Departments/PhysicsPage.dart';
+// import 'package:students_app/Departments/ZoologyPage.dart';
 import 'package:students_app/Levels_of_departments/levels_of_botany.dart';
-import 'package:students_app/Levels_of_departments/levels_of_chemDep.dart';
+import 'package:students_app/Levels_of_departments/levels_of_chem_dep.dart';
 import 'package:students_app/Levels_of_departments/levels_of_geoDep.dart';
 import 'package:students_app/Levels_of_departments/levels_of_mathematics.dart';
 import 'package:students_app/Levels_of_departments/levels_of_phyiscsDep.dart';
@@ -17,17 +16,19 @@ import 'package:students_app/Levels_of_departments/levels_of_zoologyDep.dart';
 const Color darkBlue = Color.fromARGB(255, 1, 87, 155);
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData.light(), //.copyWith(scaffoldBackgroundColor: darkBlue),
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        body: ListView(children: [
+        body: ListView(children: const [
           Chemistry(),
           Physics(),
           Mathematics(),
@@ -41,6 +42,8 @@ class MyApp extends StatelessWidget {
 }
 
 class Chemistry extends StatelessWidget {
+  const Chemistry({super.key});
+
   get borderRadius => BorderRadius.circular(8.0);
 
   @override
@@ -88,6 +91,8 @@ class Chemistry extends StatelessWidget {
 }
 
 class Physics extends StatelessWidget {
+  const Physics({super.key});
+
   get borderRadius => BorderRadius.circular(8.0);
 
   @override
@@ -134,6 +139,8 @@ class Physics extends StatelessWidget {
 }
 
 class Mathematics extends StatelessWidget {
+  const Mathematics({super.key});
+
   get borderRadius => BorderRadius.circular(8.0);
 
   @override
@@ -181,6 +188,8 @@ class Mathematics extends StatelessWidget {
 }
 
 class Geology extends StatelessWidget {
+  const Geology({super.key});
+
   get borderRadius => BorderRadius.circular(8.0);
 
   @override
@@ -227,6 +236,8 @@ class Geology extends StatelessWidget {
 }
 
 class Zoology extends StatelessWidget {
+  const Zoology({super.key});
+
   get borderRadius => BorderRadius.circular(8.0);
 
   @override
@@ -273,6 +284,8 @@ class Zoology extends StatelessWidget {
 }
 
 class Botany extends StatelessWidget {
+  const Botany({super.key});
+
   get borderRadius => BorderRadius.circular(8.0);
 
   @override
