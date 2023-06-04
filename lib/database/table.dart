@@ -23,24 +23,12 @@ class TableData extends StatelessWidget {
           child: ListView(
             children: [
               Center(
-                child: Row(
-                  children: [
-                    const Text(
-                      "المعدل التراكمي",
-                      style: TextStyle(
-                        fontSize: 20.0,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    SizedBox(width: 15),
-                    Text(
-                      rowMap[1],
-                      style: const TextStyle(
-                        fontSize: 25.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
+                child: Text(
+                  rowMap[1],
+                  style: const TextStyle(
+                    fontSize: 25.0,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
               const SizedBox(
