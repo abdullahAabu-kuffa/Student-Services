@@ -155,8 +155,10 @@ class _AppointmentEditorState extends State<AppointmentEditor> {
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter a number';
-                    }else if(value=='0'){
+                    }else if(int.parse(value)==0){
                       return 'Please enter a number > 0 ';
+                    }else if(int.parse(value)>100){
+                      return 'Please enter a number < 100 ';
                     }
                     return null;
                   },
@@ -244,7 +246,7 @@ class _AppointmentEditorState extends State<AppointmentEditor> {
                           Navigator.of(context).pop(meetings);
                         }
                       },
-                      child: const Text("save"),
+                      child: const Text("save",style: TextStyle(color: Colors.white),),
                     ),
                   ),
                 

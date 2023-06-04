@@ -24,16 +24,9 @@ class TableData extends StatelessWidget {
             children: [
               Center(
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text(
-                      "المعدل التراكمي",
-                      style: TextStyle(
-                        fontSize: 20.0,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    SizedBox(width: 15),
-                    Text(
+                    Text(//the name 
                       rowMap[1],
                       style: const TextStyle(
                         fontSize: 25.0,

@@ -8,6 +8,7 @@ class HomePage1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(
           children: [Image.asset('images/Home1.png')],
