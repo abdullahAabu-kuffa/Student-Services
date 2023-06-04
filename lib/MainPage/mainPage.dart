@@ -12,6 +12,8 @@ import 'package:students_app/MainPage/notesPage.dart';
 
 import 'package:students_app/MainPage/searchPage.dart';
 
+import '../Auth/logInScreen.dart';
+
 Color mainColor = const Color.fromARGB(255, 1, 87, 155);
 
 class MainPage extends StatefulWidget {
@@ -132,7 +134,7 @@ class _MainPageState extends State<MainPage> {
               ),
             ),
             const Divider(thickness: 1),
-            GestureDetector(
+            ListTile(
               onTap: () async {
                 showDialog(
                     barrierDismissible: false,
@@ -152,15 +154,11 @@ class _MainPageState extends State<MainPage> {
                               )),
                           IconButton(
                               onPressed: () async {
-                                setState(() {
-                                  signOutLoading = true;
-                                });
                                 await _auth.signOut();
-                                Navigator.of(context)
-                                    .pushReplacementNamed('logInScreen');
-                                setState(() {
-                                  signOutLoading = false;
-                                });
+                                Navigator.of(context).pushAndRemoveUntil(
+                                    MaterialPageRoute(
+                                        builder: (context) => const LogIn()),
+                                    (route) => false);
                               },
                               icon: const Icon(
                                 Icons.done,
@@ -170,12 +168,12 @@ class _MainPageState extends State<MainPage> {
                       );
                     });
               },
-              child: TextButton(
-                onPressed: () {},
-                child: const ListTile(
-                  leading: Icon(Icons.logout),
-                  title: Text('Log out'),
-                ),
+              contentPadding:
+                  const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+              leading: const Icon(Icons.exit_to_app),
+              title: const Text(
+                "Logout",
+                style: TextStyle(color: Colors.black),
               ),
             ),
           ]),
