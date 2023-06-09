@@ -7,6 +7,7 @@ import 'package:syncfusion_flutter_calendar/calendar.dart';
 final FirebaseAuth _auth = FirebaseAuth.instance;
 final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 final CollectionReference _eventsCollection = _firestore.collection('events');
+
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
   @override
@@ -61,6 +62,7 @@ class _HomePageState extends State<HomePage> {
                   showDialog(
                     context: context,
                     builder: (context) => AlertDialog(
+                      scrollable: true,
                       title: Text(patternAppointment.subject.toString()),
                       content: Text(patternAppointment.notes.toString()),
                       actions: [
@@ -79,35 +81,7 @@ class _HomePageState extends State<HomePage> {
                                         appointment: patternAppointment,
                                       )),
                             );
-                            String id = snapshot.data!.docs
-                                .firstWhere((element) =>
-                                    element.get('recurrence_rule') ==
-                                        patternAppointment.recurrenceRule &&
-                                    element.get('note') ==
-                                        patternAppointment.notes &&
-                                    element.get('title') ==
-                                        patternAppointment.subject &&
-                                    DateTime.parse(element.get('start_time')) ==
-                                        patternAppointment.startTime &&
-                                    DateTime.parse(element.get('end_time')) ==
-                                        patternAppointment.endTime &&
-                                    Color(int.parse(element.get('color'),
-                                            radix: 16)) ==
-                                        patternAppointment.color)
-                                .id;
-                            final DocumentReference eventRef = FirebaseFirestore
-                                .instance
-                                .collection('events')
-                                .doc(id);
-                            eventRef.update({
-                              'recurrence_rule': appointment.recurrenceRule,
-                              'note': appointment.notes,
-                              'title': appointment.subject,
-                              'start_time': appointment.startTime.toString(),
-                              'end_time': appointment.endTime.toString(),
-                              'color':
-                                  appointment.color.value.toRadixString(16),
-                            });
+                            updateAppointment(getAppointmentdoc(snapshot, patternAppointment), appointment);
                             // ignore: use_build_context_synchronously
                             Navigator.pop(context);
                           },
@@ -116,27 +90,8 @@ class _HomePageState extends State<HomePage> {
                         // Delete Button
                         TextButton(
                           onPressed: () {
-                            String id = snapshot.data!.docs
-                                .firstWhere((element) =>
-                                    element.get('recurrence_rule') ==
-                                        patternAppointment.recurrenceRule &&
-                                    element.get('note') ==
-                                        patternAppointment.notes &&
-                                    element.get('title') ==
-                                        patternAppointment.subject &&
-                                    DateTime.parse(element.get('start_time')) ==
-                                        patternAppointment.startTime &&
-                                    DateTime.parse(element.get('end_time')) ==
-                                        patternAppointment.endTime &&
-                                    Color(int.parse(element.get('color'),
-                                            radix: 16)) ==
-                                        patternAppointment.color)
-                                .id;
-                            final DocumentReference eventRef = FirebaseFirestore
-                                .instance
-                                .collection('events')
-                                .doc(id);
-                            eventRef.delete();
+                            deleteAppointment(getAppointmentdoc(
+                                snapshot, patternAppointment));
                             Navigator.pop(context);
                           },
                           child: const Text('DELETE'),
@@ -158,17 +113,7 @@ class _HomePageState extends State<HomePage> {
             MaterialPageRoute(builder: (context) => const AppointmentEditor()),
           );
           setState(() {
-            final User? user = _auth.currentUser;
-            final String userId = user?.uid ?? '';
-            _firestore.collection('events').add({
-              'title': appointment.subject,
-              'note': appointment.notes,
-              'color': appointment.color.value.toRadixString(16),
-              'start_time': appointment.startTime.toString(),
-              'end_time': appointment.endTime.toString(),
-              'recurrence_rule': appointment.recurrenceRule ?? '',
-              'user_id': userId.toString(),
-            });
+            addAppointment(appointment);
           });
         },
       ),
@@ -277,4 +222,54 @@ String generateWeeklyRecurrenceRule(int dayOfWeek, int numberOfWeeks) {
   // print('FREQ=WEEKLY;COUNT=$numberOfWeeks;BYDAY=$dayString');
 
   return 'FREQ=WEEKLY;COUNT=$numberOfWeeks;BYDAY=$dayString';
+}
+
+void deleteAppointment(DocumentReference<Object?> eventRef) {
+  eventRef.delete();
+}
+
+void updateAppointment(
+    DocumentReference<Object?> eventRef, Appointment appointment) {
+  eventRef.update({
+    'recurrence_rule': appointment.recurrenceRule,
+    'note': appointment.notes,
+    'title': appointment.subject,
+    'start_time': appointment.startTime.toString(),
+    'end_time': appointment.endTime.toString(),
+    'color': appointment.color.value.toRadixString(16),
+  });
+}
+
+void addAppointment(Appointment appointment) {
+  final User? user = _auth.currentUser;
+  final String userId = user?.uid ?? '';
+  _eventsCollection.add({
+    'title': appointment.subject,
+    'note': appointment.notes,
+    'color': appointment.color.value.toRadixString(16),
+    'start_time': appointment.startTime.toString(),
+    'end_time': appointment.endTime.toString(),
+    'recurrence_rule': appointment.recurrenceRule ?? '',
+    'user_id': userId.toString(),
+  });
+}
+
+DocumentReference getAppointmentdoc(
+    AsyncSnapshot<QuerySnapshot<Object?>> snapshot,
+    Appointment patternAppointment) {
+  String id = snapshot.data!.docs
+      .firstWhere((element) =>
+          element.get('recurrence_rule') == patternAppointment.recurrenceRule &&
+          element.get('note') == patternAppointment.notes &&
+          element.get('title') == patternAppointment.subject &&
+          DateTime.parse(element.get('start_time')) ==
+              patternAppointment.startTime &&
+          DateTime.parse(element.get('end_time')) ==
+              patternAppointment.endTime &&
+          Color(int.parse(element.get('color'), radix: 16)) ==
+              patternAppointment.color)
+      .id;
+  final DocumentReference eventRef =
+      FirebaseFirestore.instance.collection('events').doc(id);
+  return eventRef;
 }
