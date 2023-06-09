@@ -3,7 +3,14 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import '../style/app_style.dart';
+
+final FirebaseAuth _auth = FirebaseAuth.instance;
+final User? user = _auth.currentUser;
+final String userId = user?.uid ?? '';
+final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+final CollectionReference _notesCollection = _firestore.collection('notes');
 
 class NoteEditorScreen extends StatefulWidget {
   const NoteEditorScreen({Key? key}) : super(key: key);
@@ -19,7 +26,7 @@ class _NoteEditorScreenState extends State<NoteEditorScreen> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _mainController = TextEditingController();
-
+  bool isSaving = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,11 +40,11 @@ class _NoteEditorScreenState extends State<NoteEditorScreen> {
             children: [
               TextFormField(
                 validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter a Title';
-                    }
-                    return null;
-                  },
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter a Title';
+                  }
+                  return null;
+                },
                 controller: _titleController,
                 decoration: const InputDecoration(
                   border: InputBorder.none,
@@ -57,11 +64,11 @@ class _NoteEditorScreenState extends State<NoteEditorScreen> {
               ),
               TextFormField(
                 validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter content';
-                    }
-                    return null;
-                  },
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter content';
+                  }
+                  return null;
+                },
                 controller: _mainController,
                 keyboardType: TextInputType.multiline,
                 maxLines: null,
@@ -79,23 +86,15 @@ class _NoteEditorScreenState extends State<NoteEditorScreen> {
         onPressed: () async {
           final isValid = _formKey.currentState!.validate();
           if (isValid) {
-            final FirebaseAuth _auth = FirebaseAuth.instance;
-          final User? user = _auth.currentUser;
-          final String userId = user?.uid ?? '';
-          // print(userId);
-          FirebaseFirestore.instance.collection("notes").add({
-            "note_title": _titleController.text,
-            "creation_date": date,
-            "note_content": _mainController.text,
-            "color_id": int.parse(color_id),
-            'user_id': userId.toString(),
-          }).then((value) {
-            print(value.id);
+            _notesCollection.add({
+              "note_title": _titleController.text,
+              "creation_date": date,
+              "note_content": _mainController.text,
+              "color_id": int.parse(color_id),
+              'user_id': userId.toString(),
+            });
             Navigator.pop(context);
-          }).catchError(
-              (error) => print("failed to add new note due to $error"));
           }
-          
         },
         child: const Icon(Icons.save),
       ),

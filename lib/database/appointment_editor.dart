@@ -65,7 +65,7 @@ class _AppointmentEditorState extends State<AppointmentEditor> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const SizedBox(height: 35),
+                const SizedBox(height: 35.0),
                 TextFormField(
                   autofocus: false,
                   decoration: const InputDecoration(
