@@ -57,7 +57,7 @@ class FacultyOfScience extends StatelessWidget {
                 ]),
                 TextButton(
                     onPressed: () {
-                      Navigator.of(context).pushNamed(routeName);
+                      Navigator.of(context).pushReplacementNamed(routeName);
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
