@@ -35,9 +35,15 @@ class _ViewFilesState extends State<ViewFiles> {
               leading: SizedBox(
                 width: 60.0,
                 height: 60.0,
-                child: thumbnailLink != null
-                    ? Image.network(thumbnailLink)
-                    : Image.asset('images/default_thumbnail.jpeg'),
+                child: Image(
+                  image: NetworkImage(thumbnailLink ?? ''),
+                  fit: BoxFit.cover,
+                  errorBuilder: (BuildContext context, Object exception,
+                      StackTrace? stackTrace) {
+                    return Image.asset('images/default_thumbnail.jpeg',
+                        fit: BoxFit.cover);
+                  },
+                ),
               ),
               title: Text(
                 file.name,

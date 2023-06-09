@@ -118,6 +118,16 @@ class _MainPageState extends State<MainPage> {
                 child: Image.network(
                   widget.photo,
                 ),
+                //you can do it like this 
+                // Image(
+                //   image: NetworkImage(widget.photo ?? ''),
+                //   fit: BoxFit.cover,
+                //   errorBuilder: (BuildContext context, Object exception,
+                //       StackTrace? stackTrace) {
+                //     return Image.asset('images/default_thumbnail.jpeg',
+                //         fit: BoxFit.cover);
+                //   },
+                // ),
               ),
               accountName: Text(widget.name),
               accountEmail: Text(widget.email),
