@@ -1,12 +1,16 @@
+import 'dart:ffi';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import '../MainPage/home_page.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
 class AppointmentEditor extends StatefulWidget {
-  const AppointmentEditor({super.key});
+  final Appointment? appointment;
+  const AppointmentEditor({super.key, this.appointment});
 
   @override
   State<AppointmentEditor> createState() => _AppointmentEditorState();
@@ -22,8 +26,31 @@ class _AppointmentEditorState extends State<AppointmentEditor> {
   TextEditingController notesController = TextEditingController();
   TextEditingController numberController = TextEditingController();
   late DateTime _start = DateTime.now();
-
   late DateTime _end = DateTime.now().add(const Duration(hours: 2));
+  @override
+  Void? initState() {
+    super.initState();
+    if (widget.appointment == null) {
+      _start = DateTime.now();
+      _end = DateTime.now().add(const Duration(hours: 2));
+      _color = Colors.blue;
+      _repeats = 1;
+      _notes = '';
+      _name = '';
+    } else {
+      final appointment = widget.appointment;
+      _start = appointment!.startTime;
+      _end = appointment.endTime;
+      _color = appointment.color;
+      String? recurrenceRule = appointment.recurrenceRule;
+      int countIndex = recurrenceRule!.indexOf('COUNT=') + 'COUNT='.length;
+      int semicolonIndex = recurrenceRule.indexOf(';', countIndex);
+      numberController.text = recurrenceRule.substring(countIndex, semicolonIndex);
+      notesController.text = appointment.notes!;
+      nameController.text = appointment.subject;
+    }
+    return null;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +66,8 @@ class _AppointmentEditorState extends State<AppointmentEditor> {
               children: [
                 TextFormField(
                   autofocus: false,
-                  decoration: const InputDecoration(border: OutlineInputBorder(),labelText: 'Name'),
+                  decoration: const InputDecoration(
+                      border: OutlineInputBorder(), labelText: 'Name'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter a name';
@@ -75,7 +103,7 @@ class _AppointmentEditorState extends State<AppointmentEditor> {
                           _start.add(const Duration(hours: 2)).hour,
                           _start.minute,
                         );
-                      }else if(newStart.isBefore(_end)){
+                      } else if (newStart.isBefore(_end)) {
                         _end = DateTime(
                           newStart.year,
                           newStart.month,
@@ -93,8 +121,7 @@ class _AppointmentEditorState extends State<AppointmentEditor> {
                 ),
                 const SizedBox(height: 16.0),
                 ListTile(
-                  title: Text(
-                      "${_start.hour.toString()}:${_start.minute.toString()}"),
+                  title: Text(DateFormat('h:mm a').format(_start)),
                   trailing: ElevatedButton(
                     onPressed: () async {
                       final time = await pickTime(_start);
@@ -114,7 +141,7 @@ class _AppointmentEditorState extends State<AppointmentEditor> {
                           newStart.add(const Duration(hours: 2)).hour,
                           newStart.minute,
                         );
-                      }else if(newStart.isBefore(_end)){
+                      } else if (newStart.isBefore(_end)) {
                         _end = DateTime(
                           newStart.year,
                           newStart.month,
@@ -153,8 +180,7 @@ class _AppointmentEditorState extends State<AppointmentEditor> {
                 ),
                 const SizedBox(height: 16.0),
                 ListTile(
-                  title:
-                      Text("${_end.hour.toString()}:${_end.minute.toString()}"),
+                  title: Text(DateFormat('h:mm a').format(_end)),
                   trailing: ElevatedButton(
                     onPressed: () async {
                       final time = await pickTime(_end);
@@ -186,8 +212,9 @@ class _AppointmentEditorState extends State<AppointmentEditor> {
                 TextFormField(
                   autofocus: false,
                   keyboardType: TextInputType.number,
-                  decoration:
-                      const InputDecoration(border: OutlineInputBorder(),labelText: 'number of repeats'),
+                  decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'number of repeats'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter a number';
@@ -206,7 +233,8 @@ class _AppointmentEditorState extends State<AppointmentEditor> {
                 const SizedBox(height: 16.0),
                 TextFormField(
                   autofocus: false,
-                  decoration: const InputDecoration(border: OutlineInputBorder(),labelText: 'notes'),
+                  decoration: const InputDecoration(
+                      border: OutlineInputBorder(), labelText: 'notes'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter a notes';
@@ -236,7 +264,6 @@ class _AppointmentEditorState extends State<AppointmentEditor> {
                                     _color = color;
                                   });
                                 },
-                                // showLabel: true,
                               ),
                             ),
                             actions: <Widget>[
@@ -256,11 +283,9 @@ class _AppointmentEditorState extends State<AppointmentEditor> {
                     child: Container(
                       width: 30,
                       height: 30,
-                      // color: _color,
                       decoration: BoxDecoration(
                         color: _color,
                         shape: BoxShape.circle,
-                        // border: Border.all(color: Colors.black),
                       ),
                     ),
                   ),
@@ -278,9 +303,9 @@ class _AppointmentEditorState extends State<AppointmentEditor> {
                         _name = nameController.text.trim();
                         _repeats = int.parse(numberController.text.trim());
                         _notes = notesController.text.trim();
-                        List<Appointment> meetings = getAppointments(
+                        Appointment meeting = getAppointment(
                             _start, _end, _name, _repeats, _color, _notes);
-                        Navigator.of(context).pop(meetings);
+                        Navigator.of(context).pop(meeting);
                       }
                     },
                     child: const Text(
@@ -311,41 +336,4 @@ class _AppointmentEditorState extends State<AppointmentEditor> {
           minute: date.minute,
         ),
       );
-  // void _showDateTimePicker(bool isStart) async {
-  //   final selectedDate = await showDatePicker(
-  //     context: context,
-  //     initialDate: DateTime.now(),
-  //     firstDate: DateTime.now(),
-  //     lastDate: DateTime(2100),
-  //   );
-
-  //   if (selectedDate != null) {
-  //     final selectedTime = await showTimePicker(
-  //       context: context,
-  //       initialTime: const TimeOfDay(hour: 8, minute: 0),
-  //     );
-
-  //     if (selectedTime != null) {
-  //       final selectedDateTime = DateTime(
-  //         selectedDate.year,
-  //         selectedDate.month,
-  //         selectedDate.day,
-  //         selectedTime.hour,
-  //         selectedTime.minute,
-  //       );
-
-  //       if (isStart) {
-  //         setState(() {
-  //           _selectedStartDate = selectedDateTime;
-  //           _selectedStartTime = selectedTime;
-  //         });
-  //       } else {
-  //         setState(() {
-  //           _selectedEndDate = selectedDateTime;
-  //           _selectedEndTime = selectedTime;
-  //         });
-  //       }
-  //     }
-  //   }
-  // }
 }
