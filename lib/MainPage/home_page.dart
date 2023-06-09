@@ -5,30 +5,8 @@ import 'package:students_app/database/appointment_editor.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
-
 final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 final CollectionReference _eventsCollection = _firestore.collection('events');
-// Stream<QuerySnapshot> events = _eventsCollection
-//   .where('user_id', isEqualTo: userId)
-//   .snapshots();
-// List<Appointment> appointmentsList = [];
-// appointments.listen((QuerySnapshot snapshot) {
-//   appointmentsList = snapshot.docs.map((DocumentSnapshot document) {
-//     final data = document.data() as Map<String, dynamic>;
-//     return Appointment(
-//       startTime: DateTime.parse(data['start_time']),
-//       endTime: DateTime.parse(data['end_time']),
-//       subject: data['title'],
-//       color: Color(int.parse(data['color'])),
-//       notes: data['note'],
-//       recurrenceRule: data['recurrence_rule'],
-//     );
-//   }).toList();
-//   setState(() {
-//     _dataSource = MeetingDataSource(appointmentsList);
-//   });
-// });
-
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
   @override
@@ -86,10 +64,56 @@ class _HomePageState extends State<HomePage> {
                       title: Text(patternAppointment.subject.toString()),
                       content: Text(patternAppointment.notes.toString()),
                       actions: [
+                        // CANCEL Button
                         TextButton(
                           onPressed: () => Navigator.pop(context),
                           child: const Text('CANCEL'),
                         ),
+                        // Edit Button
+                        TextButton(
+                          onPressed: () async {
+                            Appointment appointment = await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => AppointmentEditor(
+                                        appointment: patternAppointment,
+                                      )),
+                            );
+                            String id = snapshot.data!.docs
+                                .firstWhere((element) =>
+                                    element.get('recurrence_rule') ==
+                                        patternAppointment.recurrenceRule &&
+                                    element.get('note') ==
+                                        patternAppointment.notes &&
+                                    element.get('title') ==
+                                        patternAppointment.subject &&
+                                    DateTime.parse(element.get('start_time')) ==
+                                        patternAppointment.startTime &&
+                                    DateTime.parse(element.get('end_time')) ==
+                                        patternAppointment.endTime &&
+                                    Color(int.parse(element.get('color'),
+                                            radix: 16)) ==
+                                        patternAppointment.color)
+                                .id;
+                            final DocumentReference eventRef = FirebaseFirestore
+                                .instance
+                                .collection('events')
+                                .doc(id);
+                            eventRef.update({
+                              'recurrence_rule': appointment.recurrenceRule,
+                              'note': appointment.notes,
+                              'title': appointment.subject,
+                              'start_time': appointment.startTime.toString(),
+                              'end_time': appointment.endTime.toString(),
+                              'color':
+                                  appointment.color.value.toRadixString(16),
+                            });
+                            // ignore: use_build_context_synchronously
+                            Navigator.pop(context);
+                          },
+                          child: const Text('EDIT'),
+                        ),
+                        // Delete Button
                         TextButton(
                           onPressed: () {
                             String id = snapshot.data!.docs
@@ -129,7 +153,7 @@ class _HomePageState extends State<HomePage> {
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
         onPressed: () async {
-          List<Appointment> appointments = await Navigator.push(
+          Appointment appointment = await Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => const AppointmentEditor()),
           );
@@ -137,12 +161,12 @@ class _HomePageState extends State<HomePage> {
             final User? user = _auth.currentUser;
             final String userId = user?.uid ?? '';
             _firestore.collection('events').add({
-              'title': appointments[0].subject,
-              'note': appointments[0].notes,
-              'color': appointments[0].color.value.toRadixString(16),
-              'start_time': appointments[0].startTime.toString(),
-              'end_time': appointments[0].endTime.toString(),
-              'recurrence_rule': appointments[0].recurrenceRule ?? '',
+              'title': appointment.subject,
+              'note': appointment.notes,
+              'color': appointment.color.value.toRadixString(16),
+              'start_time': appointment.startTime.toString(),
+              'end_time': appointment.endTime.toString(),
+              'recurrence_rule': appointment.recurrenceRule ?? '',
               'user_id': userId.toString(),
             });
           });
@@ -152,7 +176,7 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-List<Appointment> getAppointments(
+Appointment getAppointment(
   DateTime start,
   DateTime end,
   String name,
@@ -160,19 +184,15 @@ List<Appointment> getAppointments(
   Color color,
   String notes,
 ) {
-  // print(generateWeeklyRecurrenceRule(start.weekday, repeats));
-  // print('Start time: $start, End time: $end,name: $name');
-  List<Appointment> meetings = <Appointment>[];
-  meetings.add(
-    Appointment(
-      startTime: start,
-      endTime: end,
-      subject: name,
-      color: color,
-      notes: notes,
-      recurrenceRule: generateWeeklyRecurrenceRule(start.weekday, repeats),
-    ),
+  Appointment meetings = Appointment(
+    startTime: start,
+    endTime: end,
+    subject: name,
+    color: color,
+    notes: notes,
+    recurrenceRule: generateWeeklyRecurrenceRule(start.weekday, repeats),
   );
+
   return meetings;
 }
 
