@@ -7,6 +7,7 @@ import 'package:syncfusion_flutter_calendar/calendar.dart';
 final FirebaseAuth _auth = FirebaseAuth.instance;
 final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 final CollectionReference _eventsCollection = _firestore.collection('events');
+
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
   @override
@@ -28,7 +29,7 @@ class _HomePageState extends State<HomePage> {
             return Text('Error: ${snapshot.error}');
           }
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           }
           List<Appointment> appointmentsList =
               snapshot.data!.docs.map((DocumentSnapshot document) {

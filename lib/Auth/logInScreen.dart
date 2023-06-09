@@ -173,23 +173,21 @@ class _LogInState extends State<LogIn> {
                     margin: EdgeInsets.only(bottom: 100, left: 80, right: 80),
                   );
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                  var nameUser = await _firestore
+                  var snapshot = await _firestore
                       .collection('users')
                       .doc(userCredential.user?.uid)
-                      .get()
-                      .then((DocumentSnapshot snapshot) {
-                    var userData = snapshot.data();
-                    final nameid = userData.toString();
-
-                    Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => MainPage(
-                                name: nameid,
+                      .get();
+                  var userData = snapshot.data() as Map<String,
+                      dynamic>; // Explicitly cast to Map<String, dynamic>
+                  final nameUser = userData['name'];
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => MainPage(
+                                name: nameUser,
                                 email: email,
-                                photo:
-                                    'https://drive.google.com/file/d/1AzYxONhI7fvDYjU5BUCwimnhbAVfwXbq/view?usp=sharing')));
-                  });
+                                photo: '',
+                              )));
                 } on SocketException {
                   print("error connection");
                 } catch (e) {

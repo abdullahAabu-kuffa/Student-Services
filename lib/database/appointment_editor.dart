@@ -45,7 +45,8 @@ class _AppointmentEditorState extends State<AppointmentEditor> {
       String? recurrenceRule = appointment.recurrenceRule;
       int countIndex = recurrenceRule!.indexOf('COUNT=') + 'COUNT='.length;
       int semicolonIndex = recurrenceRule.indexOf(';', countIndex);
-      numberController.text = recurrenceRule.substring(countIndex, semicolonIndex);
+      numberController.text =
+          recurrenceRule.substring(countIndex, semicolonIndex);
       notesController.text = appointment.notes!;
       nameController.text = appointment.subject;
     }
@@ -64,6 +65,7 @@ class _AppointmentEditorState extends State<AppointmentEditor> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
+                const SizedBox(height: 35),
                 TextFormField(
                   autofocus: false,
                   decoration: const InputDecoration(
