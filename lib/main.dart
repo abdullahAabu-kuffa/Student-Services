@@ -11,7 +11,6 @@ import 'WelcomePages/welPageOfChemistry.dart';
 import 'WelcomePages/welPageOfZoology&Entomology.dart';
 import 'WelcomePages/welPageOfBotany&Microbiology.dart';
 import 'WelcomePages/welPageOfGeology.dart';
-
 import 'package:students_app/Auth/logInScreen.dart';
 import 'package:students_app/Auth/signUpScreen.dart';
 
