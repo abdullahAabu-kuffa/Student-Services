@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import '../MainPage/home_page.dart';
@@ -37,7 +39,7 @@ class _AppointmentEditorState extends State<AppointmentEditor> {
               children: [
                 TextFormField(
                   autofocus: false,
-                  decoration: const InputDecoration(labelText: 'Name'),
+                  decoration: const InputDecoration(border: OutlineInputBorder(),labelText: 'Name'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter a name';
@@ -73,6 +75,14 @@ class _AppointmentEditorState extends State<AppointmentEditor> {
                           _start.add(const Duration(hours: 2)).hour,
                           _start.minute,
                         );
+                      }else if(newStart.isBefore(_end)){
+                        _end = DateTime(
+                          newStart.year,
+                          newStart.month,
+                          newStart.day,
+                          _start.add(const Duration(hours: 2)).hour,
+                          _start.minute,
+                        );
                       }
                       setState(() {
                         _start = newStart;
@@ -96,6 +106,23 @@ class _AppointmentEditorState extends State<AppointmentEditor> {
                         time.hour,
                         time.minute,
                       );
+                      if (newStart.isAfter(_end)) {
+                        _end = DateTime(
+                          newStart.year,
+                          newStart.month,
+                          newStart.day,
+                          newStart.add(const Duration(hours: 2)).hour,
+                          newStart.minute,
+                        );
+                      }else if(newStart.isBefore(_end)){
+                        _end = DateTime(
+                          newStart.year,
+                          newStart.month,
+                          newStart.day,
+                          newStart.add(const Duration(hours: 2)).hour,
+                          newStart.minute,
+                        );
+                      }
                       setState(() {
                         _start = newStart;
                       });
@@ -132,13 +159,22 @@ class _AppointmentEditorState extends State<AppointmentEditor> {
                     onPressed: () async {
                       final time = await pickTime(_end);
                       if (time == null) return;
-                      final newEnd = DateTime(
+                      var newEnd = DateTime(
                         _end.year,
                         _end.month,
                         _end.day,
                         time.hour,
                         time.minute,
                       );
+                      if (newEnd.isBefore(_start)) {
+                        newEnd = DateTime(
+                          _end.year,
+                          _end.month,
+                          _end.day,
+                          _start.add(const Duration(hours: 2)).hour,
+                          _start.minute,
+                        );
+                      }
                       setState(() {
                         _end = newEnd;
                       });
@@ -151,13 +187,13 @@ class _AppointmentEditorState extends State<AppointmentEditor> {
                   autofocus: false,
                   keyboardType: TextInputType.number,
                   decoration:
-                      const InputDecoration(labelText: 'number of repeats'),
+                      const InputDecoration(border: OutlineInputBorder(),labelText: 'number of repeats'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter a number';
-                    }else if(int.parse(value)==0){
+                    } else if (int.parse(value) == 0) {
                       return 'Please enter a number > 0 ';
-                    }else if(int.parse(value)>100){
+                    } else if (int.parse(value) > 100) {
                       return 'Please enter a number < 100 ';
                     }
                     return null;
@@ -170,7 +206,7 @@ class _AppointmentEditorState extends State<AppointmentEditor> {
                 const SizedBox(height: 16.0),
                 TextFormField(
                   autofocus: false,
-                  decoration: const InputDecoration(labelText: 'notes'),
+                  decoration: const InputDecoration(border: OutlineInputBorder(),labelText: 'notes'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter a notes';
@@ -182,6 +218,7 @@ class _AppointmentEditorState extends State<AppointmentEditor> {
                     _notes = notesController.text.trim();
                   },
                 ),
+                const SizedBox(height: 16.0),
                 ListTile(
                   title: const Text("Color"),
                   trailing: ElevatedButton(
@@ -230,26 +267,28 @@ class _AppointmentEditorState extends State<AppointmentEditor> {
                 ),
                 const SizedBox(height: 16.0),
                 Material(
-                    elevation: 7,
-                    borderRadius: BorderRadius.circular(15),
-                    color: Colors.blue,
-                    child: MaterialButton(
-                      minWidth: 250,
-                      onPressed: () async {
-                        final isValid = _formKey.currentState!.validate();
-                        if (isValid) {
-                          _name = nameController.text.trim();
-                          _repeats = int.parse(numberController.text.trim());
-                          _notes = notesController.text.trim();
-                          List<Appointment> meetings = getAppointments(
-                              _start, _end, _name, _repeats, _color, _notes);
-                          Navigator.of(context).pop(meetings);
-                        }
-                      },
-                      child: const Text("save",style: TextStyle(color: Colors.white),),
+                  elevation: 7,
+                  borderRadius: BorderRadius.circular(15),
+                  color: Colors.blue,
+                  child: MaterialButton(
+                    minWidth: 250,
+                    onPressed: () async {
+                      final isValid = _formKey.currentState!.validate();
+                      if (isValid) {
+                        _name = nameController.text.trim();
+                        _repeats = int.parse(numberController.text.trim());
+                        _notes = notesController.text.trim();
+                        List<Appointment> meetings = getAppointments(
+                            _start, _end, _name, _repeats, _color, _notes);
+                        Navigator.of(context).pop(meetings);
+                      }
+                    },
+                    child: const Text(
+                      "save",
+                      style: TextStyle(color: Colors.white),
                     ),
                   ),
-                
+                ),
               ],
             ),
           ),

@@ -18,7 +18,7 @@ class _NoteReaderScreenState extends State<NoteReaderScreen> {
     return Scaffold(
       backgroundColor: AppStyle.cardsColor[int.parse(color_id)],
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -26,14 +26,14 @@ class _NoteReaderScreenState extends State<NoteReaderScreen> {
               widget.doc["note_title"],
               style: AppStyle.mainTitle,
             ),
-            SizedBox(
+            const SizedBox(
               height: 4.0,
             ),
             Text(
               widget.doc["creation_date"],
               style: AppStyle.dateTitle,
             ),
-            SizedBox(
+            const SizedBox(
               height: 28.0,
             ),
             Text(
@@ -43,6 +43,16 @@ class _NoteReaderScreenState extends State<NoteReaderScreen> {
             )
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.delete),
+        onPressed: () {
+          final DocumentReference noteRef = FirebaseFirestore.instance
+              .collection('notes')
+              .doc(widget.doc.id);
+          noteRef.delete();
+          Navigator.pop(context);
+        },
       ),
     );
   }

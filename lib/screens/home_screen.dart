@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../screens/note_reader.dart';
 import '../screens/note_editor.dart';
@@ -14,6 +15,9 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
+    final FirebaseAuth _auth = FirebaseAuth.instance;
+    final User? user = _auth.currentUser;
+    final String userId = user?.uid ?? '';
     return Scaffold(
         backgroundColor: Colors.white,
         body: Padding(
@@ -35,6 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: StreamBuilder<QuerySnapshot>(
                   stream: FirebaseFirestore.instance
                       .collection("notes")
+                      .where('user_id', isEqualTo: userId.toString())
                       .snapshots(),
                   builder: (context, AsyncSnapshot snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
