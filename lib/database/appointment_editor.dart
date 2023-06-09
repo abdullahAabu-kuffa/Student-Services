@@ -1,4 +1,5 @@
 import 'dart:ffi';
+import 'dart:ui' as ui;
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -85,11 +86,12 @@ class _AppointmentEditorState extends State<AppointmentEditor> {
                 ListTile(
                   title: Text("${_start.year}/${_start.month}/${_start.day}"),
                   trailing: ElevatedButton(
+                    style: ButtonStyle(
+                        minimumSize:
+                            MaterialStateProperty.all(const ui.Size(100, 40))),
                     onPressed: () async {
                       final start = await pickDate(_start);
-
                       if (start == null) return;
-
                       final newStart = DateTime(
                         start.year,
                         start.month,
@@ -97,25 +99,16 @@ class _AppointmentEditorState extends State<AppointmentEditor> {
                         _start.hour,
                         _start.minute,
                       );
-                      if (newStart.isAfter(_end)) {
-                        _end = DateTime(
-                          newStart.year,
-                          newStart.month,
-                          newStart.day,
-                          _start.add(const Duration(hours: 2)).hour,
-                          _start.minute,
-                        );
-                      } else if (newStart.isBefore(_end)) {
-                        _end = DateTime(
-                          newStart.year,
-                          newStart.month,
-                          newStart.day,
-                          _start.add(const Duration(hours: 2)).hour,
-                          _start.minute,
-                        );
-                      }
+                      final newEnd = DateTime(
+                        start.year,
+                        start.month,
+                        start.day,
+                        _start.add(const Duration(hours: 2)).hour,
+                        _start.minute,
+                      );
                       setState(() {
                         _start = newStart;
+                        _end = newEnd;
                       });
                     },
                     child: const Text("pick a date"),
@@ -125,6 +118,9 @@ class _AppointmentEditorState extends State<AppointmentEditor> {
                 ListTile(
                   title: Text(DateFormat('h:mm a').format(_start)),
                   trailing: ElevatedButton(
+                    style: ButtonStyle(
+                        minimumSize:
+                            MaterialStateProperty.all(const ui.Size(100, 40))),
                     onPressed: () async {
                       final time = await pickTime(_start);
                       if (time == null) return;
@@ -161,29 +157,11 @@ class _AppointmentEditorState extends State<AppointmentEditor> {
                 ),
                 const SizedBox(height: 16.0),
                 ListTile(
-                  title: Text("${_end.year}/${_end.month}/${_end.day}"),
-                  trailing: ElevatedButton(
-                    onPressed: () async {
-                      final end = await pickDate(_end, firstDate: _start);
-                      if (end == null) return;
-                      final newend = DateTime(
-                        end.year,
-                        end.month,
-                        end.day,
-                        _end.hour,
-                        _end.minute,
-                      );
-                      setState(() {
-                        _end = newend;
-                      });
-                    },
-                    child: const Text("pick a date"),
-                  ),
-                ),
-                const SizedBox(height: 16.0),
-                ListTile(
                   title: Text(DateFormat('h:mm a').format(_end)),
                   trailing: ElevatedButton(
+                    style: ButtonStyle(
+                        minimumSize:
+                            MaterialStateProperty.all(const ui.Size(100, 40))),
                     onPressed: () async {
                       final time = await pickTime(_end);
                       if (time == null) return;
@@ -281,15 +259,10 @@ class _AppointmentEditorState extends State<AppointmentEditor> {
                       );
                     },
                     style: ButtonStyle(
+                        minimumSize:
+                            MaterialStateProperty.all(const ui.Size(100, 40)),
                         backgroundColor: MaterialStatePropertyAll(_color)),
-                    child: Container(
-                      width: 30,
-                      height: 30,
-                      decoration: BoxDecoration(
-                        color: _color,
-                        shape: BoxShape.circle,
-                      ),
-                    ),
+                    child: null,
                   ),
                 ),
                 const SizedBox(height: 16.0),
@@ -305,9 +278,9 @@ class _AppointmentEditorState extends State<AppointmentEditor> {
                         _name = nameController.text.trim();
                         _repeats = int.parse(numberController.text.trim());
                         _notes = notesController.text.trim();
-                        Appointment meeting = getAppointment(
+                        Appointment appointment = getAppointment(
                             _start, _end, _name, _repeats, _color, _notes);
-                        Navigator.of(context).pop(meeting);
+                        Navigator.of(context).pop(appointment);
                       }
                     },
                     child: const Text(
